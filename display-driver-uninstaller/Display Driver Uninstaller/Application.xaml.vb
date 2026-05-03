@@ -875,7 +875,7 @@ Namespace Display_Driver_Uninstaller
 
 				Using process As Process = New Process() With
 			 {
-			  .StartInfo = New ProcessStartInfo(webAddress, Nothing) With
+			  .StartInfo = New ProcessStartInfo(webAddress) With
 			  {
 			   .UseShellExecute = True,
 			   .CreateNoWindow = True,

@@ -3271,7 +3271,7 @@ Namespace Display_Driver_Uninstaller
                     Try
 
                         Dim infslist As String = ""
-                        For Each infs As String In My.Computer.FileSystem.GetFiles(Environment.GetEnvironmentVariable("windir") & "\inf", Microsoft.VisualBasic.FileIO.SearchOption.SearchTopLevelOnly, "oem*.inf")
+                        For Each infs As String In System.IO.Directory.GetFiles(Environment.GetEnvironmentVariable("windir") & "\inf", "oem*.inf", System.IO.SearchOption.TopDirectoryOnly)
                             If Not String.IsNullOrWhiteSpace(infs) Then
                                 infslist += infs
                             End If

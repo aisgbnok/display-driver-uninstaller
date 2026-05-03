@@ -152,12 +152,12 @@ Namespace Display_Driver_Uninstaller
 
         Public Sub New(Optional ByVal createPaths As Boolean = True)
             If createPaths Then
-                m_exefile = Assembly.GetExecutingAssembly().Location
+                m_exefile = Environment.ProcessPath
                 m_dirapp = Path.GetDirectoryName(AppExeFile)
 
                 'm_roaming = Environment.GetFolderPath(Environment.SpecialFolder.System) + "\config\systemprofile\AppData\Roaming\"
                 m_roaming = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
-                m_dirapproaming = Path.Combine(m_roaming, Assembly.GetExecutingAssembly().GetName().Name.Replace(" ", ""))
+                m_dirapproaming = Path.Combine(m_roaming, "DisplayDriverUninstaller")
 
                 m_dirsettings = Path.Combine(m_dirapp, "Settings\")
                 m_dirlanguage = Path.Combine(m_dirsettings, "Languages\")

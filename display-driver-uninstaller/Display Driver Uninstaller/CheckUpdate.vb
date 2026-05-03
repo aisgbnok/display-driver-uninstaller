@@ -20,7 +20,7 @@ Namespace Display_Driver_Uninstaller
 				End If
 
 				Try
-					If Not My.Computer.Network.IsAvailable Then
+					If Not System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable() Then
 						status = UpdateStatus.Error
 						Return
 					End If

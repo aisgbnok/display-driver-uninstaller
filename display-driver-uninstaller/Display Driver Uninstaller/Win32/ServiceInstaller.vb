@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports System.ServiceProcess
-Imports System.Configuration.Install
 
 ' https://msdn.microsoft.com/en-us/library/windows/desktop/ms685974(v=vs.85).aspx
 Namespace Display_Driver_Uninstaller.Win32
@@ -24,14 +23,14 @@ Namespace Display_Driver_Uninstaller.Win32
 		End Sub
 
 		Public Sub Uninstall(ByVal serviceName As String)
-			Dim serviceInstallerObj As System.ServiceProcess.ServiceInstaller = New System.ServiceProcess.ServiceInstaller()
-			Dim context As InstallContext = New InstallContext("<<log file path>>", Nothing)
-			serviceInstallerObj.Context = context
-			serviceInstallerObj.ServiceName = serviceName
 			Try
-				serviceInstallerObj.Uninstall(Nothing)
+                Dim psi As New ProcessStartInfo("sc.exe", "delete """ & serviceName & """")
+                psi.CreateNoWindow = True
+                psi.UseShellExecute = False
+                Dim proc As Process = Process.Start(psi)
+                proc.WaitForExit()
 				Application.Log.AddMessage("Service : " & serviceName & " removed.")
-			Catch ex As Win32Exception
+			Catch ex As Exception
 				Application.Log.AddException(ex, serviceName)
 			End Try
 

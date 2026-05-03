@@ -629,14 +629,14 @@ Namespace Display_Driver_Uninstaller.Win32
 
 				'Create a new acl from scratch.
 				'Dim newacl As New System.Security.AccessControl.DirectorySecurity()
-				Dim newacl As System.Security.AccessControl.DirectorySecurity = Directory.GetAccessControl(path, AccessControlSections.Owner)
+				Dim newacl As System.Security.AccessControl.DirectorySecurity = dInfo.GetAccessControl(AccessControlSections.Owner)
 				'set owner only here (needed for WinXP)
 				newacl.SetOwner(sid)
 				dInfo.SetAccessControl(newacl)
 				'This remove inheritance.
 				newacl.SetAccessRuleProtection(False, True)
 
-				newacl = Directory.GetAccessControl(path)
+				newacl = dInfo.GetAccessControl()
 				' Add the FileSystemAccessRule to the security settings. 
 				newacl.AddAccessRule(New FileSystemAccessRule(sid, Rights, ControlType))
 
