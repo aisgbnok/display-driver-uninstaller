@@ -265,11 +265,11 @@
             </Style.Triggers>
         </Style>
 
-        <ImageBrush x:Key="logoAMD" ImageSource="/Display%20Driver%20Uninstaller;component/Resources/amd_logo.png" Stretch="Uniform" AlignmentY="Center" />
-        <ImageBrush x:Key="logoNvidia" ImageSource="/Display%20Driver%20Uninstaller;component/Resources/nvidia_logo.png" Stretch="Uniform" AlignmentY="Center" />
-        <ImageBrush x:Key="logoIntel" ImageSource="/Display%20Driver%20Uninstaller;component/Resources/intel_logo.jpg" Stretch="Uniform" AlignmentY="Center" />
-        <ImageBrush x:Key="logoRealtek" ImageSource="/Display%20Driver%20Uninstaller;component/Resources/realtek-logo.png" Stretch="Uniform" AlignmentY="Center" />
-        <ImageBrush x:Key="logoSoundBlaster" ImageSource="/Display%20Driver%20Uninstaller;component/Resources/creative_logo.png" Stretch="Uniform" AlignmentY="Center" />
+        <BitmapImage x:Key="logoAMD" UriSource="/Display%20Driver%20Uninstaller;component/Resources/amd_logo.png" />
+        <BitmapImage x:Key="logoNvidia" UriSource="/Display%20Driver%20Uninstaller;component/Resources/nvidia_logo.png" />
+        <BitmapImage x:Key="logoIntel" UriSource="/Display%20Driver%20Uninstaller;component/Resources/intel_logo.jpg" />
+        <BitmapImage x:Key="logoRealtek" UriSource="/Display%20Driver%20Uninstaller;component/Resources/realtek-logo.png" />
+        <BitmapImage x:Key="logoSoundBlaster" UriSource="/Display%20Driver%20Uninstaller;component/Resources/creative_logo.png" />
 
     </Window.Resources>
 
@@ -369,32 +369,29 @@
 
             </DockPanel>
 
-            <Border DockPanel.Dock="Bottom" Margin="0,0,0,25">
-                <Border.Style>
-                    <Style TargetType="{x:Type Border}">
-
-                        <Setter Property="Background" Value="Transparent"/>
-
+            <Image DockPanel.Dock="Bottom" Margin="0,0,0,25" Stretch="Uniform" VerticalAlignment="Center">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.AMD}">
-                                <Setter Property="Background" Value="{StaticResource logoAMD}"/>
+                            <DataTrigger Binding="{Binding Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.AMD}">
+                                <Setter Property="Source" Value="{StaticResource logoAMD}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.Nvidia}">
-                                <Setter Property="Background" Value="{StaticResource logoNvidia}"/>
+                            <DataTrigger Binding="{Binding Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.Nvidia}">
+                                <Setter Property="Source" Value="{StaticResource logoNvidia}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.Intel}">
-                                <Setter Property="Background" Value="{StaticResource logoIntel}"/>
+                            <DataTrigger Binding="{Binding Settings.SelectedGPU, Mode=OneWay}" Value="{x:Static local:GPUVendor.Intel}">
+                                <Setter Property="Source" Value="{StaticResource logoIntel}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Settings.SelectedAUDIO, Mode=OneWay}" Value="{x:Static local:AudioVendor.Realtek}">
-                                <Setter Property="Background" Value="{StaticResource logoRealtek}"/>
+                            <DataTrigger Binding="{Binding Settings.SelectedAUDIO, Mode=OneWay}" Value="{x:Static local:AudioVendor.Realtek}">
+                                <Setter Property="Source" Value="{StaticResource logoRealtek}"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=Settings.SelectedAUDIO, Mode=OneWay}" Value="{x:Static local:AudioVendor.SoundBlaster}">
-                                <Setter Property="Background" Value="{StaticResource logoSoundBlaster}"/>
+                            <DataTrigger Binding="{Binding Settings.SelectedAUDIO, Mode=OneWay}" Value="{x:Static local:AudioVendor.SoundBlaster}">
+                                <Setter Property="Source" Value="{StaticResource logoSoundBlaster}"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Border.Style>
-            </Border>
+                </Image.Style>
+            </Image>
         </DockPanel>
 
         <DockPanel Grid.Row="2" x:Name="ButtonsPanel" >
