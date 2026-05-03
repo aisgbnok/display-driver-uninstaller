@@ -364,12 +364,8 @@
             </TextBlock>
         </StackPanel>
 
-        <DockPanel Grid.Row="2" Grid.RowSpan="1" Grid.Column="3" Margin="10,0">
-            <DockPanel DockPanel.Dock="Bottom" Grid.Row="1" Grid.Column="3" >
-
-            </DockPanel>
-
-            <Image DockPanel.Dock="Bottom" Margin="0,0,0,25" Stretch="Uniform" VerticalAlignment="Center">
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Margin="48,0,10,0" HorizontalAlignment="Right">
+            <Image Stretch="Uniform" VerticalAlignment="Center" MaxWidth="384" MaxHeight="120" Margin="0, 0, 0,24">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Style.Triggers>
@@ -392,7 +388,7 @@
                     </Style>
                 </Image.Style>
             </Image>
-        </DockPanel>
+        </Grid>
 
         <DockPanel Grid.Row="2" x:Name="ButtonsPanel" >
             <DockPanel.Resources>
