@@ -5,7 +5,6 @@
 
 		Public Sub New()
 			InitializeComponent()
-			Application.ApplyWindowTheme(Me)
 		End Sub
 
 		Private Sub BtnAccept_Click(sender As Object, e As RoutedEventArgs) Handles btnAccept.Click

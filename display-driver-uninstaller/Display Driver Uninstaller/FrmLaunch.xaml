@@ -10,15 +10,7 @@
 		<conv:BooleanToVisibilityConverter x:Key="BoolToVis" TrueValue="Visible" FalseValue="Collapsed" />
 		<conv:CombiningConverter x:Key="ValueToVis" Converter1="{StaticResource ValueEqualsOrGreater}" Converter2="{StaticResource BoolToVis}" />
 		<conv:NullableBooleanToBoolean x:Key="NulBoolToBool"></conv:NullableBooleanToBoolean>
-		<SolidColorBrush x:Key="LaunchTextBrush" Color="Black" />
-		<SolidColorBrush x:Key="LaunchMutedTextBrush" Color="#FF5C6670" />
-		<SolidColorBrush x:Key="LaunchSurfaceBrush" Color="White" />
-		<SolidColorBrush x:Key="LaunchPanelBrush" Color="White" />
-		<SolidColorBrush x:Key="LaunchPanelHoverBrush" Color="#FFF2F2F2" />
-		<SolidColorBrush x:Key="LaunchPanelPressedBrush" Color="#FFE6E6E6" />
-		<SolidColorBrush x:Key="LaunchBorderBrush" Color="Black" />
-		<SolidColorBrush x:Key="LaunchSelectionBrush" Color="#FFCBDCF4" />
-		<SolidColorBrush x:Key="LaunchWarningBrush" Color="#FFEB0000" />
+
 
 		<Style TargetType="{x:Type Label}">
 			<Setter Property="Foreground" Value="{DynamicResource LaunchTextBrush}" />

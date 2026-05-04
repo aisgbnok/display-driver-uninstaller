@@ -33,7 +33,6 @@ Namespace Display_Driver_Uninstaller
 		Public Sub New()
 			' This call is required by the designer.
 			InitializeComponent()
-			Application.ApplyWindowTheme(Me)
 
 			' Add any initialization after the InitializeComponent() call.
 		End Sub

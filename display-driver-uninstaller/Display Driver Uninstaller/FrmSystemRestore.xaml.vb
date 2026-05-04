@@ -9,26 +9,7 @@ Namespace Display_Driver_Uninstaller
         Private ReadOnly canClose2 As New EventWaitHandle(True, EventResetMode.ManualReset) ' Thread safe!
 
         Public Sub New()
-            SeedThemeResources()
             InitializeComponent()
-        End Sub
-
-        Private Sub SeedThemeResources()
-            If Application.UseDarkThemeSession Then
-                Me.Background = New SolidColorBrush(Color.FromRgb(&H12, &H16, &H1D))
-                Me.Foreground = New SolidColorBrush(Color.FromRgb(&HF4, &HF7, &HFA))
-                Resources("SystemRestoreWindowBg") = New SolidColorBrush(Color.FromRgb(&H12, &H16, &H1D))
-                Resources("SystemRestorePanelBg") = New SolidColorBrush(Color.FromRgb(&H18, &H1E, &H27))
-                Resources("SystemRestoreBorderBrush") = New SolidColorBrush(Color.FromRgb(&H54, &H61, &H73))
-                Resources("SystemRestoreTextBrush") = New SolidColorBrush(Color.FromRgb(&HF4, &HF7, &HFA))
-            Else
-                Me.Background = New SolidColorBrush(Colors.White)
-                Me.Foreground = New SolidColorBrush(Colors.Black)
-                Resources("SystemRestoreWindowBg") = New SolidColorBrush(Colors.White)
-                Resources("SystemRestorePanelBg") = New SolidColorBrush(Colors.White)
-                Resources("SystemRestoreBorderBrush") = New SolidColorBrush(Colors.Black)
-                Resources("SystemRestoreTextBrush") = New SolidColorBrush(Colors.Black)
-            End If
         End Sub
 
         Private Sub FrmSystemRestore_Loaded(sender As Object, e As RoutedEventArgs) Handles MyBase.Loaded

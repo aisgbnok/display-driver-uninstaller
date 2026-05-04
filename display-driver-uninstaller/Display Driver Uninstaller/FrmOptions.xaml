@@ -7,13 +7,6 @@
 	Title="frmOptions" MinWidth="400" MinHeight="300" mc:Ignorable="d" d:DesignWidth="400" WindowStartupLocation="Manual" Height="637.25" SizeToContent="WidthAndHeight" Background="{DynamicResource OptionsWindowBg}" Foreground="{DynamicResource OptionsTextBrush}" >
     <Window.Resources>
         <conv:NullableBooleanToBoolean x:Key="NulBoolToBool"></conv:NullableBooleanToBoolean>
-        <SolidColorBrush x:Key="OptionsWindowBg" Color="White" />
-        <SolidColorBrush x:Key="OptionsPanelBg" Color="White" />
-        <SolidColorBrush x:Key="OptionsTextBrush" Color="Black" />
-        <SolidColorBrush x:Key="OptionsBorderBrush" Color="Black" />
-        <SolidColorBrush x:Key="OptionsButtonBg" Color="#FFF0F0F0" />
-        <SolidColorBrush x:Key="OptionsButtonBgHover" Color="#FFE5E5E5" />
-        <SolidColorBrush x:Key="OptionsButtonBgPressed" Color="#FFCCCCCC" />
     </Window.Resources>
 
     <Grid DataContext="{Binding Settings}" Background="{DynamicResource OptionsWindowBg}">

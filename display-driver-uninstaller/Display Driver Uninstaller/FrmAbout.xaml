@@ -14,12 +14,6 @@
         <conv:CombiningConverter x:Key="StrNotNullToVis" Converter1="{StaticResource StrNotNull}" Converter2="{StaticResource BoolToVis}" />
         <conv:CombiningConverter x:Key="NonZeroToVis" Converter1="{StaticResource NonZero}" Converter2="{StaticResource BoolToVis}" />
         <conv:CombiningConverter x:Key="NotNullToVis" Converter1="{StaticResource NotNull}" Converter2="{StaticResource BoolToVis}" />
-        <SolidColorBrush x:Key="AboutWindowBg" Color="White" />
-        <SolidColorBrush x:Key="AboutPanelBg" Color="White" />
-        <SolidColorBrush x:Key="AboutPanelHover" Color="#FFF2F2F2" />
-        <SolidColorBrush x:Key="AboutBorder" Color="Black" />
-        <SolidColorBrush x:Key="AboutText" Color="Black" />
-        <SolidColorBrush x:Key="AboutAccent" Color="DarkBlue" />
 
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{DynamicResource AboutText}" />

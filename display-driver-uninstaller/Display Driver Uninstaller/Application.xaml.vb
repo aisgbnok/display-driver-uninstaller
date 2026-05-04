@@ -120,161 +120,170 @@ Namespace Display_Driver_Uninstaller
 			Return MessageBox.Show(owner, message, title, buttons, MessageBoxImage.Information)
 		End Function
 
-        Public Shared Sub ApplyWindowTheme(window As Window)
-            If window Is Nothing Then Return
+		''' <summary>
+		''' Centralized Theme Engine (Single Source of Truth)
+		''' Defines and applies all Brushes, Colors, and Gradients directly to Application.Current.Resources.
+		''' This allows WPF's native DynamicResource bindings to automatically propagate theme changes
+		''' across all windows simultaneously without needing to iterate through the visual tree.
+		''' </summary>
+		Public Shared Sub SetGlobalTheme()
+			Dim isDark As Boolean = UseDarkThemeSession
 
-            If Not UseDarkThemeSession Then
-                Select Case True
-                    Case TypeOf window Is FrmMain
-                        SetBrush(window, "brushMainText", "#FF000000")
-                        SetBrush(window, "brushMainMutedText", "#FF5C6670")
-                        SetBrush(window, "brushMainControlBg", "#FFFFFFFF")
-                        SetBrush(window, "brushMainControlBgHover", "#FFF2F2F2")
-                        SetBrush(window, "brushMainControlBgPressed", "#FFE6E6E6")
-                        SetBrush(window, "brushMainControlBorder", "#FF7A7A7A")
-                        SetBrush(window, "brushMainLogBg", "#FFFFFFFF")
-                        SetBrush(window, "brushMainMenuBg", "#28FFFFFF")
-                        SetBrush(window, "brushMainStatusBg", "#28FFFFFF")
-                        SetBrush(window, "brushMainSelection", "#FFCBDCF4")
-                        SetGradient(window, "brushNvidia", "#FFDCFFDC", "#FFFFFFFF")
-                        SetGradient(window, "brushIntel", "#FFDCDCFF", "#FFFFFFFF")
-                        SetGradient(window, "brushAmd", "#FFFFE6E6", "#FFFFFFFF")
-                        SetGradient(window, "brushRealtek", "#FFDCDCFF", "#FFFFFFFF")
-                        SetGradient(window, "brushSoundBlaster", "#FFDCDCFF", "#FFFFFFFF")
-                    Case TypeOf window Is FrmLaunch
-                        SetBrush(window, "LaunchTextBrush", "#FF000000")
-                        SetBrush(window, "LaunchMutedTextBrush", "#FF5C6670")
-                        SetBrush(window, "LaunchSurfaceBrush", "#FFFFFFFF")
-                        SetBrush(window, "LaunchPanelBrush", "#FFFFFFFF")
-                        SetBrush(window, "LaunchPanelHoverBrush", "#FFF2F2F2")
-                        SetBrush(window, "LaunchPanelPressedBrush", "#FFE6E6E6")
-                        SetBrush(window, "LaunchBorderBrush", "#FF000000")
-                        SetBrush(window, "LaunchSelectionBrush", "#FFCBDCF4")
-                        SetBrush(window, "LaunchWarningBrush", "#FFEB0000")
-                    Case TypeOf window Is FrmLog
-                        SetBrush(window, "bWindowBg", "#FFFFFFFF")
-                        SetBrush(window, "bPanelBg", "#FFF0F0F0")
-                        SetBrush(window, "bPanelHover", "#FFE6E6E6")
-                        SetBrush(window, "bBorder", "#FF000000")
-                        SetColor(window, "cNormal", "#FF000000")
-                        SetColor(window, "cValue", "#FF0000D2")
-                        SetColor(window, "cWarning", "#FF000000")
-                        SetColor(window, "cError", "#FFFF0000")
-                        SetColor(window, "cSelected", "#FFCBCBCB")
-                        SetGradient(window, "bgBrushEvent", "#FFBEC8FF", "#FFFFFFFF")
-                        SetGradient(window, "bgBrushWarning", "#FFFFFFB4", "#FFFFFFFF")
-                        SetGradient(window, "bgBrushError", "#FFFFE6E6", "#FFFFFFFF")
-                    Case TypeOf window Is FrmAbout
-                        SetBrush(window, "AboutWindowBg", "#FFFFFFFF")
-                        SetBrush(window, "AboutPanelBg", "#FFFFFFFF")
-                        SetBrush(window, "AboutPanelHover", "#FFF2F2F2")
-                        SetBrush(window, "AboutBorder", "#FF000000")
-                        SetBrush(window, "AboutText", "#FF000000")
-                        SetBrush(window, "AboutAccent", "#FF000000")
-                    Case TypeOf window Is FrmOptions
-                        SetBrush(window, "OptionsWindowBg", "#FFFFFFFF")
-                        SetBrush(window, "OptionsPanelBg", "#FFFFFFFF")
-                        SetBrush(window, "OptionsTextBrush", "#FF000000")
-                        SetBrush(window, "OptionsBorderBrush", "#FF000000")
-                        SetBrush(window, "OptionsButtonBg", "#FFF0F0F0")
-                        SetBrush(window, "OptionsButtonBgHover", "#FFE5E5E5")
-                        SetBrush(window, "OptionsButtonBgPressed", "#FFCCCCCC")
-                    Case TypeOf window Is DebugWindow
-                        SetBrush(window, "DebugWindowBg", "#FFD2E4FF")
-                        SetBrush(window, "DebugPanelBg", "#FFFFFFFF")
-                        SetBrush(window, "DebugPanelHover", "#FFF2F2F2")
-                        SetBrush(window, "DebugBorder", "#FF000000")
-                        SetBrush(window, "DebugText", "#FF000000")
-                    Case TypeOf window Is FrmSystemRestore
-                        SetBrush(window, "SystemRestoreWindowBg", "#FFFFFFFF")
-                        SetBrush(window, "SystemRestorePanelBg", "#FFFFFFFF")
-                        SetBrush(window, "SystemRestoreBorderBrush", "#FF000000")
-                        SetBrush(window, "SystemRestoreTextBrush", "#FF000000")
-                    Case TypeOf window Is FrmNotice
-                        SetBrush(window, "NoticeTextBrush", "#FF000000")
-                        SetBrush(window, "NoticeSurfaceBrush", "#FFFFFFFF")
-                        SetBrush(window, "NoticePanelBrush", "#FFF0F0F0")
-                        SetBrush(window, "NoticePanelHoverBrush", "#FFE5E5E5")
-                        SetBrush(window, "NoticeBorderBrush", "#FF000000")
-                        SetBrush(window, "NoticeAccentBrush", "#FF0078D4")
-                End Select
-                Return
+			If Not isDark Then
+				SetBrush("brushMainText", "#FF000000")
+				SetBrush("brushMainMutedText", "#FF5C6670")
+				SetBrush("brushMainControlBg", "#FFFFFFFF")
+				SetBrush("brushMainControlBgHover", "#FFF2F2F2")
+				SetBrush("brushMainControlBgPressed", "#FFE6E6E6")
+				SetBrush("brushMainControlBorder", "#FF7A7A7A")
+				SetBrush("brushMainLogBg", "#FFFFFFFF")
+				SetBrush("brushMainMenuBg", "#28FFFFFF")
+				SetBrush("brushMainStatusBg", "#28FFFFFF")
+				SetBrush("brushMainSelection", "#FFCBDCF4")
+				SetGradient("brushNvidia", True, "#FF94DA32", "#FFFFFFFF")
+				SetGradient("brushIntel", True, "#FFDCDCFF", "#FFFFFFFF")
+				SetGradient("brushAmd", True, "#FFFFE6E6", "#FFFFFFFF")
+				SetGradient("brushRealtek", True, "#FFDCDCFF", "#FFFFFFFF")
+				SetGradient("brushSoundBlaster", True, "#FFDCDCFF", "#FFFFFFFF")
+
+				SetBrush("LaunchTextBrush", "#FF000000")
+				SetBrush("LaunchMutedTextBrush", "#FF5C6670")
+				SetBrush("LaunchSurfaceBrush", "#FFFFFFFF")
+				SetBrush("LaunchPanelBrush", "#FFFFFFFF")
+				SetBrush("LaunchPanelHoverBrush", "#FFF2F2F2")
+				SetBrush("LaunchPanelPressedBrush", "#FFE6E6E6")
+				SetBrush("LaunchBorderBrush", "#FF000000")
+				SetBrush("LaunchSelectionBrush", "#FFCBDCF4")
+				SetBrush("LaunchWarningBrush", "#FFEB0000")
+
+				SetBrush("bWindowBg", "#FFFFFFFF")
+				SetBrush("bPanelBg", "#FFF0F0F0")
+				SetBrush("bPanelHover", "#FFE6E6E6")
+				SetBrush("bBorder", "#FF000000")
+				SetColor("cNormal", "#FF000000")
+				SetBrush("bNormal", "#FF000000")
+				SetColor("cValue", "#FF0000D2")
+				SetBrush("bValue", "#FF0000D2")
+				SetColor("cWarning", "#FF000000")
+				SetBrush("bWarning", "#FF000000")
+				SetColor("cError", "#FFFF0000")
+				SetBrush("bError", "#FFFF0000")
+				SetColor("cSelected", "#FFCBCBCB")
+				SetBrush("bSelected", "#FFCBCBCB")
+				SetGradient("bgBrushEvent", False, "#FFBEC8FF", "#FFFFFFFF")
+				SetGradient("bgBrushWarning", False, "#FFFFFFB4", "#FFFFFFFF")
+				SetGradient("bgBrushError", False, "#FFFFE6E6", "#FFFFFFFF")
+
+				SetBrush("AboutWindowBg", "#FFFFFFFF")
+				SetBrush("AboutPanelBg", "#FFFFFFFF")
+				SetBrush("AboutPanelHover", "#FFF2F2F2")
+				SetBrush("AboutBorder", "#FF000000")
+				SetBrush("AboutText", "#FF000000")
+				SetBrush("AboutAccent", "#FF000000")
+
+				SetBrush("OptionsWindowBg", "#FFFFFFFF")
+				SetBrush("OptionsPanelBg", "#FFFFFFFF")
+				SetBrush("OptionsTextBrush", "#FF000000")
+				SetBrush("OptionsBorderBrush", "#FF000000")
+				SetBrush("OptionsButtonBg", "#FFF0F0F0")
+				SetBrush("OptionsButtonBgHover", "#FFE5E5E5")
+				SetBrush("OptionsButtonBgPressed", "#FFCCCCCC")
+
+				SetBrush("DebugWindowBg", "#FFFFFFFF")
+				SetBrush("DebugPanelBg", "#FFF0F0F0")
+				SetBrush("DebugPanelHover", "#FFE6E6E6")
+				SetBrush("DebugBorder", "#FF000000")
+				SetBrush("DebugText", "#FF000000")
+
+				SetBrush("SystemRestoreWindowBg", "#FFFFFFFF")
+				SetBrush("SystemRestorePanelBg", "#FFFFFFFF")
+				SetBrush("SystemRestoreBorderBrush", "#FF000000")
+				SetBrush("SystemRestoreTextBrush", "#FF000000")
+
+				SetBrush("NoticeTextBrush", "#FF000000")
+				SetBrush("NoticeSurfaceBrush", "#FFFFFFFF")
+				SetBrush("NoticePanelBrush", "#FFF0F0F0")
+				SetBrush("NoticePanelHoverBrush", "#FFE5E5E5")
+				SetBrush("NoticeBorderBrush", "#FF000000")
+				SetBrush("NoticeAccentBrush", "#FF0078D4")
+			Else
+				SetBrush("brushMainText", "#FFF4F7FA")
+				SetBrush("brushMainMutedText", "#FFB8C3D1")
+				SetBrush("brushMainControlBg", "#FF181E27")
+				SetBrush("brushMainControlBgHover", "#FF202834")
+				SetBrush("brushMainControlBgPressed", "#FF111720")
+				SetBrush("brushMainControlBorder", "#FF546173")
+				SetBrush("brushMainLogBg", "#FF1B222D")
+				SetBrush("brushMainMenuBg", "#FF10151D")
+				SetBrush("brushMainStatusBg", "#FF0F141B")
+				SetBrush("brushMainSelection", "#FF394657")
+				SetGradient("brushNvidia", True, "#FF416900", "#FF12161D")
+				SetGradient("brushIntel", True, "#FF13233B", "#FF12161D")
+				SetGradient("brushAmd", True, "#FF32171B", "#FF12161D")
+				SetGradient("brushRealtek", True, "#FF152235", "#FF12161D")
+				SetGradient("brushSoundBlaster", True, "#FF211933", "#FF12161D")
+
+				SetBrush("LaunchTextBrush", "#FFF4F7FA")
+				SetBrush("LaunchMutedTextBrush", "#FFB8C3D1")
+				SetBrush("LaunchSurfaceBrush", "#FF12161D")
+				SetBrush("LaunchPanelBrush", "#FF181E27")
+				SetBrush("LaunchPanelHoverBrush", "#FF202834")
+				SetBrush("LaunchPanelPressedBrush", "#FF111720")
+				SetBrush("LaunchBorderBrush", "#FF546173")
+				SetBrush("LaunchSelectionBrush", "#FF394657")
+				SetBrush("LaunchWarningBrush", "#FFFF8F8F")
+
+				SetBrush("bWindowBg", "#FF12161D")
+				SetBrush("bPanelBg", "#FF181E27")
+				SetBrush("bPanelHover", "#FF202834")
+				SetBrush("bBorder", "#FF546173")
+				SetColor("cNormal", "#FFF2F5F7")
+				SetBrush("bNormal", "#FFF2F5F7")
+				SetColor("cValue", "#FF7AB8FF")
+				SetBrush("bValue", "#FF7AB8FF")
+				SetColor("cWarning", "#FFFFC857")
+				SetBrush("bWarning", "#FFFFC857")
+				SetColor("cError", "#FFFF7B72")
+				SetBrush("bError", "#FFFF7B72")
+				SetColor("cSelected", "#FF2D3A4B")
+				SetBrush("bSelected", "#FF2D3A4B")
+				SetGradient("bgBrushEvent", False, "#FF1E3150", "#FF12161D")
+				SetGradient("bgBrushWarning", False, "#FF4A3B16", "#FF12161D")
+				SetGradient("bgBrushError", False, "#FF4A1F24", "#FF12161D")
+
+				SetBrush("AboutWindowBg", "#FF12161D")
+				SetBrush("AboutPanelBg", "#FF181E27")
+				SetBrush("AboutPanelHover", "#FF202834")
+				SetBrush("AboutBorder", "#FF546173")
+				SetBrush("AboutText", "#FFF4F7FA")
+				SetBrush("AboutAccent", "#FF7AB8FF")
+
+				SetBrush("OptionsWindowBg", "#FF12161D")
+				SetBrush("OptionsPanelBg", "#FF181E27")
+				SetBrush("OptionsTextBrush", "#FFF4F7FA")
+				SetBrush("OptionsBorderBrush", "#FF546173")
+				SetBrush("OptionsButtonBg", "#FF181E27")
+				SetBrush("OptionsButtonBgHover", "#FF202834")
+				SetBrush("OptionsButtonBgPressed", "#FF111720")
+
+				SetBrush("DebugWindowBg", "#FF181E27")
+				SetBrush("DebugPanelBg", "#FF12161D")
+				SetBrush("DebugPanelHover", "#FF202834")
+				SetBrush("DebugBorder", "#FFF4F7FA")
+				SetBrush("DebugText", "#FFF4F7FA")
+
+                SetBrush("SystemRestoreWindowBg", "#FF12161D")
+                SetBrush("SystemRestorePanelBg", "#FF181E27")
+                SetBrush("SystemRestoreBorderBrush", "#FF546173")
+                SetBrush("SystemRestoreTextBrush", "#FFF4F7FA")
+
+                SetBrush("NoticeTextBrush", "#FFF4F7FA")
+                SetBrush("NoticeSurfaceBrush", "#FF12161D")
+                SetBrush("NoticePanelBrush", "#FF181E27")
+                SetBrush("NoticePanelHoverBrush", "#FF202834")
+                SetBrush("NoticeBorderBrush", "#FF546173")
+                SetBrush("NoticeAccentBrush", "#FF58A6FF")
             End If
-
-            Select Case True
-                Case TypeOf window Is FrmMain
-                    SetBrush(window, "brushMainText", "#FFF4F7FA")
-                    SetBrush(window, "brushMainMutedText", "#FFB8C3D1")
-                    SetBrush(window, "brushMainControlBg", "#FF181E27")
-                    SetBrush(window, "brushMainControlBgHover", "#FF202834")
-                    SetBrush(window, "brushMainControlBgPressed", "#FF111720")
-                    SetBrush(window, "brushMainControlBorder", "#FF546173")
-                    SetBrush(window, "brushMainLogBg", "#FF1B222D")
-                    SetBrush(window, "brushMainMenuBg", "#FF10151D")
-                    SetBrush(window, "brushMainStatusBg", "#FF0F141B")
-                    SetBrush(window, "brushMainSelection", "#FF394657")
-                    SetGradient(window, "brushNvidia", "#FF122315", "#FF12161D")
-                    SetGradient(window, "brushIntel", "#FF13233B", "#FF12161D")
-                    SetGradient(window, "brushAmd", "#FF32171B", "#FF12161D")
-                    SetGradient(window, "brushRealtek", "#FF152235", "#FF12161D")
-                    SetGradient(window, "brushSoundBlaster", "#FF211933", "#FF12161D")
-                Case TypeOf window Is FrmLaunch
-                    SetBrush(window, "LaunchTextBrush", "#FFF4F7FA")
-                    SetBrush(window, "LaunchMutedTextBrush", "#FFB8C3D1")
-                    SetBrush(window, "LaunchSurfaceBrush", "#FF12161D")
-                    SetBrush(window, "LaunchPanelBrush", "#FF181E27")
-                    SetBrush(window, "LaunchPanelHoverBrush", "#FF202834")
-                    SetBrush(window, "LaunchPanelPressedBrush", "#FF111720")
-                    SetBrush(window, "LaunchBorderBrush", "#FF546173")
-                    SetBrush(window, "LaunchSelectionBrush", "#FF394657")
-                    SetBrush(window, "LaunchWarningBrush", "#FFFF8F8F")
-                Case TypeOf window Is FrmLog
-                    SetBrush(window, "bWindowBg", "#FF12161D")
-                    SetBrush(window, "bPanelBg", "#FF181E27")
-                    SetBrush(window, "bPanelHover", "#FF202834")
-                    SetBrush(window, "bBorder", "#FF546173")
-                    SetColor(window, "cNormal", "#FFF2F5F7")
-                    SetColor(window, "cValue", "#FF7AB8FF")
-                    SetColor(window, "cWarning", "#FFFFC857")
-                    SetColor(window, "cError", "#FFFF7B72")
-                    SetColor(window, "cSelected", "#FF2D3A4B")
-                    SetGradient(window, "bgBrushEvent", "#FF1E3150", "#FF12161D")
-                    SetGradient(window, "bgBrushWarning", "#FF4A3B16", "#FF12161D")
-                    SetGradient(window, "bgBrushError", "#FF4A1F24", "#FF12161D")
-                Case TypeOf window Is FrmAbout
-                    SetBrush(window, "AboutWindowBg", "#FF12161D")
-                    SetBrush(window, "AboutPanelBg", "#FF181E27")
-                    SetBrush(window, "AboutPanelHover", "#FF202834")
-                    SetBrush(window, "AboutBorder", "#FF546173")
-                    SetBrush(window, "AboutText", "#FFF4F7FA")
-                    SetBrush(window, "AboutAccent", "#FF7AB8FF")
-                Case TypeOf window Is FrmOptions
-                    SetBrush(window, "OptionsWindowBg", "#FF12161D")
-                    SetBrush(window, "OptionsPanelBg", "#FF181E27")
-                    SetBrush(window, "OptionsTextBrush", "#FFF4F7FA")
-                    SetBrush(window, "OptionsBorderBrush", "#FF546173")
-                    SetBrush(window, "OptionsButtonBg", "#FF181E27")
-                    SetBrush(window, "OptionsButtonBgHover", "#FF202834")
-                    SetBrush(window, "OptionsButtonBgPressed", "#FF111720")
-                Case TypeOf window Is DebugWindow
-                    SetBrush(window, "DebugWindowBg", "#FF12161D")
-                    SetBrush(window, "DebugPanelBg", "#FF181E27")
-                    SetBrush(window, "DebugPanelHover", "#FF202834")
-                    SetBrush(window, "DebugBorder", "#FF546173")
-                    SetBrush(window, "DebugText", "#FFF4F7FA")
-                Case TypeOf window Is FrmSystemRestore
-                    SetBrush(window, "SystemRestoreWindowBg", "#FF12161D")
-                    SetBrush(window, "SystemRestorePanelBg", "#FF181E27")
-                    SetBrush(window, "SystemRestoreBorderBrush", "#FF546173")
-                    SetBrush(window, "SystemRestoreTextBrush", "#FFF4F7FA")
-                Case TypeOf window Is FrmNotice
-                    SetBrush(window, "NoticeTextBrush", "#FFF4F7FA")
-                    SetBrush(window, "NoticeSurfaceBrush", "#FF12161D")
-                    SetBrush(window, "NoticePanelBrush", "#FF181E27")
-                    SetBrush(window, "NoticePanelHoverBrush", "#FF202834")
-                    SetBrush(window, "NoticeBorderBrush", "#FF546173")
-                    SetBrush(window, "NoticeAccentBrush", "#FF58A6FF")
-            End Select
         End Sub
 
         Public Shared Sub ApplyThemeToAllWindows()
@@ -283,48 +292,46 @@ Namespace Display_Driver_Uninstaller
                 m_dispatcher.Invoke(Sub() ApplyThemeToAllWindows())
                 Return
             End If
-            For Each w As Window In Current.Windows
-                ApplyWindowTheme(w)
-            Next
+            SetGlobalTheme()
         End Sub
 
-        Private Shared Sub SetBrush(window As Window, key As String, colorText As String)
-			Dim colorValue As Color = ParseColor(colorText)
-			window.Resources(key) = New SolidColorBrush(colorValue)
-		End Sub
+        Private Shared Sub SetBrush(key As String, colorText As String)
+            Dim colorValue As Color = ParseColor(colorText)
+            Current.Resources(key) = New SolidColorBrush(colorValue)
+        End Sub
 
-		Private Shared Sub SetColor(window As Window, key As String, colorText As String)
-			window.Resources(key) = ParseColor(colorText)
-		End Sub
+        Private Shared Sub SetColor(key As String, colorText As String)
+            Current.Resources(key) = ParseColor(colorText)
+        End Sub
 
-		Private Shared Sub SetGradient(window As Window, key As String, ParamArray colors() As String)
-			If colors Is Nothing OrElse colors.Length = 0 Then
-				Return
-			End If
+        Private Shared Sub SetGradient(key As String, isVertical As Boolean, ParamArray colors() As String)
+            If colors Is Nothing OrElse colors.Length = 0 Then
+                Return
+            End If
 
-			Dim sourceBrush As LinearGradientBrush = TryCast(window.Resources(key), LinearGradientBrush)
-			Dim newBrush As LinearGradientBrush
+            Dim sourceBrush As LinearGradientBrush = TryCast(Current.Resources(key), LinearGradientBrush)
+            Dim newBrush As LinearGradientBrush
 
-			If sourceBrush Is Nothing Then
-				newBrush = New LinearGradientBrush With {
-					.StartPoint = New Point(0, 0.5),
-					.EndPoint = New Point(1, 0.5)
-				}
+            If sourceBrush Is Nothing Then
+                newBrush = New LinearGradientBrush With {
+                    .StartPoint = If(isVertical, New Point(0.5, 0), New Point(0, 0.5)),
+                    .EndPoint = If(isVertical, New Point(0.5, 1), New Point(1, 0.5))
+                }
 
-				For i As Integer = 0 To colors.Length - 1
-					Dim offset As Double = If(colors.Length = 1, 0, CDbl(i) / CDbl(colors.Length - 1))
-					newBrush.GradientStops.Add(New GradientStop(ParseColor(colors(i)), offset))
-				Next
-			Else
-				newBrush = sourceBrush.Clone()
+                For i As Integer = 0 To colors.Length - 1
+                    Dim offset As Double = If(colors.Length = 1, 0, CDbl(i) / CDbl(colors.Length - 1))
+                    newBrush.GradientStops.Add(New GradientStop(ParseColor(colors(i)), offset))
+                Next
+            Else
+                newBrush = sourceBrush.Clone()
 
-				For i As Integer = 0 To Math.Min(newBrush.GradientStops.Count, colors.Length) - 1
-					newBrush.GradientStops(i).Color = ParseColor(colors(i))
-				Next
-			End If
+                For i As Integer = 0 To Math.Min(newBrush.GradientStops.Count, colors.Length) - 1
+                    newBrush.GradientStops(i).Color = ParseColor(colors(i))
+                Next
+            End If
 
-			window.Resources(key) = newBrush
-		End Sub
+            Current.Resources(key) = newBrush
+        End Sub
 
 		Private Shared Function ParseColor(colorText As String) As Color
 			Return CType(ColorConverter.ConvertFromString(colorText), Color)
@@ -607,8 +614,8 @@ Namespace Display_Driver_Uninstaller
             ' Force software rendering
             RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly
 
-            ' Vérify if we started as a service
-            If Environment.CommandLine.Contains("/service") Then
+			' Vérify if we started as a service
+			If Environment.CommandLine.Contains("/service") Then
 				Try
 					Dim ServicesToRun() As System.ServiceProcess.ServiceBase = {New DDUSafeBootService()}
 					System.ServiceProcess.ServiceBase.Run(ServicesToRun)
@@ -654,8 +661,8 @@ Namespace Display_Driver_Uninstaller
 			info.Add(KvP.Empty)
 			info.Add(If(_fileIo.ExistsDir(Paths.SystemDrive), "[Found]", "[Not found]") + " SystemDrive", Paths.SystemDrive)
 			info.Add(If(_fileIo.ExistsDir(Paths.WinDir), "[Found]", "[Not found]") + " WinDir", Paths.WinDir)
-            info.Add(If(_fileIo.ExistsDir(Paths.UsersPath), "[Found]", "[Not found]") + " UserPath", Paths.UsersPath)
-            info.Add(If(_fileIo.ExistsDir(Paths.System32), "[Found]", "[Not found]") + " System32", Paths.System32)
+			info.Add(If(_fileIo.ExistsDir(Paths.UsersPath), "[Found]", "[Not found]") + " UserPath", Paths.UsersPath)
+			info.Add(If(_fileIo.ExistsDir(Paths.System32), "[Found]", "[Not found]") + " System32", Paths.System32)
 			If IntPtr.Size = 8 Then
 				info.Add(If(_fileIo.ExistsDir(Paths.SysWOW64), "[Found]", "[Not found]") + " SysWOW64", Paths.SysWOW64)
 			End If
@@ -712,61 +719,62 @@ Namespace Display_Driver_Uninstaller
 					Log.AddException(ex, "Parsing arguments failed!" & CRLF & ">> Application_Startup()")
 				End Try
 
-                ' DDU completed cleaning just close and dont do anything else.
-                Try
-                    If LaunchOptions.CleanComplete Then
+				' DDU completed cleaning just close and dont do anything else.
+				Try
+					If LaunchOptions.CleanComplete Then
 
-                        Dim maxWaitSeconds As Integer = 15
-                        Dim startTime As DateTime = DateTime.Now
-                        Dim currentProcessName As String = Process.GetCurrentProcess().ProcessName
+						Dim maxWaitSeconds As Integer = 15
+						Dim startTime As DateTime = DateTime.Now
+						Dim currentProcessName As String = Process.GetCurrentProcess().ProcessName
 
-                        While (DateTime.Now - startTime).TotalSeconds < maxWaitSeconds
+						While (DateTime.Now - startTime).TotalSeconds < maxWaitSeconds
 
-                            Dim processes() As Process = Process.GetProcessesByName(currentProcessName)
+							Dim processes() As Process = Process.GetProcessesByName(currentProcessName)
 
-                            Try
-                                Dim otherInstanceExists As Boolean = processes.Length > 1
-                                If Not otherInstanceExists Then Exit While
-                            Finally
-                                For Each p As Process In processes
-                                    p.Dispose()
-                                Next
-                            End Try
+							Try
+								Dim otherInstanceExists As Boolean = processes.Length > 1
+								If Not otherInstanceExists Then Exit While
+							Finally
+								For Each p As Process In processes
+									p.Dispose()
+								Next
+							End Try
 
-                            Thread.Sleep(500)
-                        End While
+							Thread.Sleep(500)
+						End While
 
-                        If LaunchOptions.Restart Then
-                            RemoveRegOption()
-                            RestartComputer()
-                            AppClose(Me, EventArgs.Empty)
-                            Exit Sub
-                        End If
+						If LaunchOptions.Restart Then
+							RemoveRegOption()
+							RestartComputer()
+							AppClose(Me, EventArgs.Empty)
+							Exit Sub
+						End If
 
-                        If LaunchOptions.Shutdown Then
-                            RemoveRegOption()
-                            ShutdownComputer()
-                            AppClose(Me, EventArgs.Empty)
-                            Exit Sub
-                        End If
+						If LaunchOptions.Shutdown Then
+							RemoveRegOption()
+							ShutdownComputer()
+							AppClose(Me, EventArgs.Empty)
+							Exit Sub
+						End If
 
-                        AppClose(Me, EventArgs.Empty)
-                        Exit Sub
-                    End If
-                Catch ex As Exception
-                    Log.AddException(ex, "Parsing arguments failed!" & CRLF & ">> Application_Startup()")
-                End Try
+						AppClose(Me, EventArgs.Empty)
+						Exit Sub
+					End If
+				Catch ex As Exception
+					Log.AddException(ex, "Parsing arguments failed!" & CRLF & ">> Application_Startup()")
+				End Try
 
 
 
-                ' Load default language (English) + Find language files from folder
-                InitLanguages()
+				' Load default language (English) + Find language files from folder
+				InitLanguages()
 
 
 				' Load AppSettings and select last used language (if settings exists)
 				Settings.Load()
-				m_useDarkThemeSession = Settings.UseDarkTheme
+                m_useDarkThemeSession = Settings.UseDarkTheme
 
+				SetGlobalTheme()
 
 				' Select language (last used -> native -> default)
 				' Now we have translated messages available

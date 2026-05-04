@@ -2,30 +2,7 @@ Namespace Display_Driver_Uninstaller
     Public Class FrmNotice
 
         Public Sub New()
-            SeedThemeResources()
             InitializeComponent()
-        End Sub
-
-        Private Sub SeedThemeResources()
-            If Application.UseDarkThemeSession Then
-                Me.Background = New SolidColorBrush(Color.FromRgb(&H12, &H16, &H1D))
-                Me.Foreground = New SolidColorBrush(Color.FromRgb(&HF4, &HF7, &HFA))
-                Resources("NoticeTextBrush") = New SolidColorBrush(Color.FromRgb(&HF4, &HF7, &HFA))
-                Resources("NoticeSurfaceBrush") = New SolidColorBrush(Color.FromRgb(&H12, &H16, &H1D))
-                Resources("NoticePanelBrush") = New SolidColorBrush(Color.FromRgb(&H18, &H1E, &H27))
-                Resources("NoticePanelHoverBrush") = New SolidColorBrush(Color.FromRgb(&H20, &H28, &H34))
-                Resources("NoticeBorderBrush") = New SolidColorBrush(Color.FromRgb(&H54, &H61, &H73))
-                Resources("NoticeAccentBrush") = New SolidColorBrush(Color.FromRgb(&H58, &HA6, &HFF))
-            Else
-                Me.Background = New SolidColorBrush(Colors.White)
-                Me.Foreground = New SolidColorBrush(Colors.Black)
-                Resources("NoticeTextBrush") = New SolidColorBrush(Colors.Black)
-                Resources("NoticeSurfaceBrush") = New SolidColorBrush(Colors.White)
-                Resources("NoticePanelBrush") = New SolidColorBrush(Color.FromRgb(&HF0, &HF0, &HF0))
-                Resources("NoticePanelHoverBrush") = New SolidColorBrush(Color.FromRgb(&HE5, &HE5, &HE5))
-                Resources("NoticeBorderBrush") = New SolidColorBrush(Colors.Black)
-                Resources("NoticeAccentBrush") = New SolidColorBrush(Color.FromRgb(&H0, &H78, &HD4))
-            End If
         End Sub
 
         Public Shared Function ShowNotice(owner As Window, title As String, message As String, Optional buttons As MessageBoxButton = MessageBoxButton.OK) As MessageBoxResult
