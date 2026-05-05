@@ -189,11 +189,31 @@ Namespace Display_Driver_Uninstaller
 				SetBrush("OptionsButtonBgHover", "#FFE5E5E5")
 				SetBrush("OptionsButtonBgPressed", "#FFCCCCCC")
 
-				SetBrush("DebugWindowBg", "#FFFFFFFF")
+			    ' These are just testings right now. Feel free to rewrite, research, and redesign the token architecture.
+				' Layer 0 — window chrome / tab strip background
+				SetBrush("DebugWindowBg", "#FFE8E8E8")
+				' Layer 1 — content pane / selected tab surface (white = highest elevation in light)
+				SetBrush("DebugContentBg", "#FFFFFFFF")
+
+				' Layer 2 — inactive tab, listbox, input fields, panels
 				SetBrush("DebugPanelBg", "#FFF0F0F0")
-				SetBrush("DebugPanelHover", "#FFE6E6E6")
+
+				' Hover — midpoint between inactive and selected
+				SetBrush("DebugPanelHover", "#FFE0E0E0")
+
+				' Press — confirms physical click feedback (slightly darker than inactive)
+				SetBrush("DebugPanelPress", "#FFD4D4D4")
+
+				' Borders — subtle, not pure black
 				SetBrush("DebugBorder", "#FF000000")
-				SetBrush("DebugText", "#FF000000")
+
+				' Text — near-black, softer than #000 to reduce harshness
+				SetBrush("DebugText", "#FF1A1A1A")
+				SetBrush("DebugTextMuted", "#FF6A6A6A")
+
+				' Selection highlight (ComboBoxItem, ListViewItem selected)
+				SetBrush("bSelected", "#FFB8D4F0")
+				SetBrush("bSelectedText", "#FF1A1A1A")
 
 				SetBrush("SystemRestoreWindowBg", "#FFFFFFFF")
 				SetBrush("SystemRestorePanelBg", "#FFFFFFFF")
@@ -266,13 +286,27 @@ Namespace Display_Driver_Uninstaller
 				SetBrush("OptionsButtonBgHover", "#FF202834")
 				SetBrush("OptionsButtonBgPressed", "#FF111720")
 
-				SetBrush("DebugWindowBg", "#FF181E27")
-				SetBrush("DebugPanelBg", "#FF12161D")
-				SetBrush("DebugPanelHover", "#FF202834")
-				SetBrush("DebugBorder", "#FFF4F7FA")
-				SetBrush("DebugText", "#FFF4F7FA")
+				' These are just testings right now. Feel free to rewrite, research, and redesign the token architecture.
+				' Layer 0 — window chrome / tab strip background (DARKEST)
+				SetBrush("DebugWindowBg", "#FF0E1117")
+				' Layer 1 — content pane / selected tab surface (most lifted dark tone)
+				SetBrush("DebugContentBg", "#FF1E2736")
+				' Layer 2 — inactive tab, input fields, panels
+				SetBrush("DebugPanelBg", "#FF151C28")
+				' Hover
+				SetBrush("DebugPanelHover", "#FF1A2232")
+				' Press
+				SetBrush("DebugPanelPress", "#FF0C1018")
+				' Borders — visible but not harsh
+				SetBrush("DebugBorder", "#FFD8E0EC")
+				' Text
+				SetBrush("DebugText", "#FFD8E0EC")
+				SetBrush("DebugTextMuted", "#FF8895A8")
+				' Selection highlight
+				SetBrush("bSelected", "#FF2A4A72")
+				SetBrush("bSelectedText", "#FFD8E0EC")
 
-                SetBrush("SystemRestoreWindowBg", "#FF12161D")
+				SetBrush("SystemRestoreWindowBg", "#FF12161D")
                 SetBrush("SystemRestorePanelBg", "#FF181E27")
                 SetBrush("SystemRestoreBorderBrush", "#FF546173")
                 SetBrush("SystemRestoreTextBrush", "#FFF4F7FA")
@@ -772,8 +806,10 @@ Namespace Display_Driver_Uninstaller
 
 				' Load AppSettings and select last used language (if settings exists)
 				Settings.Load()
-                m_useDarkThemeSession = Settings.UseDarkTheme
+				m_useDarkThemeSession = Settings.UseDarkTheme
 
+				' Initialize the global resource dictionary with the correct theme palette
+				' This must run before any window renders so all dynamic resources resolve correctly on launch.
 				SetGlobalTheme()
 
 				' Select language (last used -> native -> default)

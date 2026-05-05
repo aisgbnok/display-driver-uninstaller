@@ -6,710 +6,689 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SetupAPI" Height="480" Width="640" MinHeight="480" MinWidth="640" Loaded="Window_Loaded" Background="{DynamicResource DebugWindowBg}" Foreground="{DynamicResource DebugText}">
 
-	<Window.Resources>
-		<conv:IsNullConverter x:Key="IsNull" />
-		<conv:BooleanToVisibilityConverter x:Key="BoolToVis" TrueValue="Collapsed" FalseValue="Visible" />
-		<conv:CombiningConverter x:Key="NullToVis" Converter1="{StaticResource IsNull}" Converter2="{StaticResource BoolToVis}" />
+    <Window.Resources>
+        <conv:IsNullConverter x:Key="IsNull" />
+        <conv:BooleanToVisibilityConverter x:Key="BoolToVis" TrueValue="Collapsed" FalseValue="Visible" />
+        <conv:CombiningConverter x:Key="NullToVis" Converter1="{StaticResource IsNull}" Converter2="{StaticResource BoolToVis}" />
 
-		<Style TargetType="{x:Type TextBlock}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-		</Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+        </Style>
 
-		<Style TargetType="{x:Type Label}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-		</Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+        </Style>
 
-		<Style TargetType="{x:Type CheckBox}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-		</Style>
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
 
-		<Style TargetType="{x:Type TextBox}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
-		</Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="2,2" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CaretBrush" Value="{DynamicResource DebugText}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource bSelected}" />
+        </Style>
 
-		<Style x:Key="DebugComboBoxStyle" TargetType="{x:Type ComboBox}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
-			<Setter Property="BorderThickness" Value="1" />
-			<Setter Property="Padding" Value="8,2,28,2" />
-			<Setter Property="Height" Value="22" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type ComboBox}">
-						<Grid>
-							<ToggleButton x:Name="ToggleButton"
-										  Focusable="False"
-										  ClickMode="Press"
-										  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-								<ToggleButton.Template>
-									<ControlTemplate TargetType="{x:Type ToggleButton}">
-										<Border x:Name="ComboBorder"
-												Background="{DynamicResource DebugPanelBg}"
-												BorderBrush="{TemplateBinding BorderBrush}"
-												BorderThickness="{TemplateBinding BorderThickness}"
-												SnapsToDevicePixels="True">
-											<Grid>
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="28" />
-												</Grid.ColumnDefinitions>
-												<ContentPresenter Margin="1,2,4,2"
-																  VerticalAlignment="Center"
-																  HorizontalAlignment="Left"
-																  Content="{TemplateBinding Content}" />
-												<TextBlock Grid.Column="1"
-														   Text="▼"
-														   Foreground="{DynamicResource DebugText}"
-														   VerticalAlignment="Center"
-														   HorizontalAlignment="Center"
-														   FontSize="10" />
-											</Grid>
-										</Border>
-										<ControlTemplate.Triggers>
-											<Trigger Property="IsMouseOver" Value="True">
-												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
-											</Trigger>
-											<Trigger Property="IsChecked" Value="True">
-												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
-											</Trigger>
-										</ControlTemplate.Triggers>
-									</ControlTemplate>
-								</ToggleButton.Template>
-							</ToggleButton>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8,2" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="ButtonBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background"
+                                        Value="{DynamicResource DebugPanelHover}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder" Property="Background"
+                                        Value="{DynamicResource DebugPanelPress}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-							<ContentPresenter IsHitTestVisible="False"
-											  Margin="8,2,28,2"
-											  VerticalAlignment="Center"
-											  HorizontalAlignment="Left"
-											  Content="{TemplateBinding SelectionBoxItem}"
-											  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-											  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+        <Style x:Key="DebugComboBoxStyle" TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8,2,28,2" />
+            <Setter Property="Height" Value="22" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid>
+                            <ToggleButton x:Name="ToggleButton"
+                                          Focusable="False"
+                                          ClickMode="Press"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="ComboBorder"
+                                                Background="{DynamicResource DebugPanelBg}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                SnapsToDevicePixels="True">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="24" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="1"
+                                                           Text="▾"
+                                                           Foreground="{DynamicResource DebugTextMuted}"
+                                                           VerticalAlignment="Center"
+                                                           HorizontalAlignment="Center"
+                                                           FontSize="14" />
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                                <Setter TargetName="ComboBorder" Property="BorderBrush" Value="{DynamicResource DebugText}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
 
-							<Popup x:Name="Popup"
-								   Placement="Bottom"
-								   IsOpen="{TemplateBinding IsDropDownOpen}"
-								   AllowsTransparency="True"
-								   Focusable="False"
-								   PopupAnimation="Slide">
-								<Border Background="{DynamicResource DebugPanelBg}"
-										BorderBrush="{DynamicResource DebugBorder}"
-										BorderThickness="1"
-										MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-										SnapsToDevicePixels="True">
-									<ScrollViewer SnapsToDevicePixels="True">
-										<ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
-									</ScrollViewer>
-								</Border>
-							</Popup>
-						</Grid>
-						<ControlTemplate.Triggers>
-							<Trigger Property="HasItems" Value="False">
-								<Setter TargetName="Popup" Property="MinHeight" Value="22" />
-							</Trigger>
-							<Trigger Property="IsEnabled" Value="False">
-								<Setter Property="Opacity" Value="0.55" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+                            <ContentPresenter IsHitTestVisible="False"
+                                              Margin="8,2,28,2"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
 
-		<Style x:Key="DebugComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
-			<Style.Triggers>
-				<Trigger Property="IsHighlighted" Value="True">
-					<Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
-				</Trigger>
-				<Trigger Property="IsSelected" Value="True">
-					<Setter Property="Background" Value="{DynamicResource bSelected}" />
-				</Trigger>
-			</Style.Triggers>
-		</Style>
+                            <Popup x:Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                <Border Background="{DynamicResource DebugPanelBg}"
+                                        BorderBrush="{DynamicResource DebugBorder}"
+                                        BorderThickness="1"
+                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                        SnapsToDevicePixels="True">
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="False">
+                                <Setter TargetName="Popup" Property="MinHeight" Value="22" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-		<Style TargetType="{x:Type Button}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
-			<Setter Property="BorderThickness" Value="1" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type Button}">
-						<Border x:Name="ButtonBorder"
-								Background="{TemplateBinding Background}"
-								BorderBrush="{TemplateBinding BorderBrush}"
-								BorderThickness="{TemplateBinding BorderThickness}">
-							<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
-						</Border>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
-							</Trigger>
-							<Trigger Property="IsPressed" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource DebugWindowBg}" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+        <Style x:Key="DebugComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="Padding" Value="4,2" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Style.Triggers>
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource bSelected}" />
+                    <Setter Property="Foreground" Value="{DynamicResource bSelectedText}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-		<Style TargetType="{x:Type ListBox}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
-		</Style>
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugContentBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
 
-		<Style TargetType="{x:Type TabItem}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
-			<Setter Property="Padding" Value="10,6" />
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type TabItem}">
-						<Border x:Name="TabBorder"
-								Background="{TemplateBinding Background}"
-								BorderBrush="{TemplateBinding BorderBrush}"
-								BorderThickness="1,1,1,0"
-								Margin="0,0,4,0"
-								Padding="{TemplateBinding Padding}">
-							<ContentPresenter ContentSource="Header" RecognizesAccessKey="True" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-						</Border>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
-							</Trigger>
-							<Trigger Property="IsSelected" Value="True">
-								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugWindowBg}" />
-								<Setter Property="Panel.ZIndex" Value="1" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
+        <!-- ═══════════════════════════════════════════════
+             TABITEM — folder-tab pattern:
+               inactive  = DebugPanelBg  (recedes into strip)
+               hover     = DebugPanelHover
+               selected  = DebugContentBg (merges with content pane)
+             Margin -1 bottom on selected erases the strip border
+             so the tab visually IS the content pane.
+             ═══════════════════════════════════════════════ -->
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Padding" Value="10,4" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border x:Name="TabBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1,1,1,0"
+                                Margin="0,2,4,0"
+                                Padding="{TemplateBinding Padding}"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugContentBg}" />
+                                <Setter TargetName="TabBorder" Property="Margin" Value="0,0,4,-3" />
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="TabBorder" Property="Opacity" Value="0.45" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
-		<Style TargetType="{x:Type GridViewColumnHeader}">
-			<Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-			<Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-		</Style>
+        <!-- ═══════════════════════════════════════════════
+             GRIDVIEWCOLUMNHEADER
+        ═══════════════════════════════════════════════ -->
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Padding" Value="8,2" />
+        </Style>
 
-		<DataTemplate x:Key="logItem" >
-			<StackPanel>
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="Description:   " FontSize="14" />
-					<TextBlock Text="{Binding Path=Description, Mode=OneWay}" FontSize="14" />
-				</DockPanel>
+        <!-- 
+        ═══════════════════════════════════════════════
+        ALTERNATING LIST ROWS
+            Index 0 = DebugContentBg (base content surface)
+            Index 1 = DebugPanelBg (slightly off from content)
+        ═══════════════════════════════════════════════ -->
+        <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type Control}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="{DynamicResource DebugContentBg}" />
+                </Trigger>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="FriendlyName:   " />
-					<TextBlock Text="{Binding Path=FriendlyName, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="Class Guid:    " />
-					<TextBlock Text="{Binding Path=ClassGuid, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="Device ID:    " />
-					<TextBlock Text="{Binding Path=DeviceID, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="DevInst:    " />
-					<TextBlock Text="{Binding Path=DevInstID, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Parent:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ParentDevices}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Child:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ChildDevices}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="Install State:    " />
-					<TextBlock Text="{Binding Path=InstallStateStr, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="Dev Problem:    " />
-					<TextBlock Text="{Binding Path=DevProblemStr, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Dev Status:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding DevStatusStr}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<DockPanel LastChildFill="true">
-					<TextBlock FontWeight="Bold" Text="RebootRequired:    " />
-					<TextBlock Text="{Binding Path=RebootRequired, Mode=OneWay}" />
-				</DockPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Install Flags:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding InstallFlagsStr}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Capabilities:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding CapabilitiesStr}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Config Flags:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ConfigFlagsStr}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Oem Inf(s):    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding OemInfs}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<StackPanel>
-									<TextBlock>
-										<TextBlock Text="File: "/><TextBlock FontWeight="Bold" Text="{Binding FileName, Mode=OneWay}"/>
-									</TextBlock>
-									<TextBlock>
-										<TextBlock Text="Install Date: "/><TextBlock Text="{Binding InstallDate, Mode=OneWay}"/>
-									</TextBlock>
-									<TextBlock>
-										<TextBlock Text="Class: "/><TextBlock Text="{Binding Class, Mode=OneWay}"/>
-									</TextBlock>
-									<TextBlock>
-										<TextBlock Text="Provider: "/><TextBlock Text="{Binding Provider, Mode=OneWay}"/>
-									</TextBlock>
-									<TextBlock>
-										<TextBlock Text="Is Valid: "/><TextBlock Text="{Binding IsValid, Mode=OneWay}"/>
-									</TextBlock>
-									<TextBlock/>
-								</StackPanel>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Hardware IDs:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding HardwareIDs}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="Compatible IDs:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding CompatibleIDs}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel>
-					<TextBlock FontWeight="Bold" Text="LowerFilters:    " />
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding LowerFilters}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<TextBlock Text="{Binding}"/>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel Visibility="{Binding Path=DriverInfo, Mode=OneWay, Converter={StaticResource NullToVis}}">
-					<TextBlock FontWeight="Bold" 
+        <DataTemplate x:Key="logItem">
+            <StackPanel>
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="Description:   " FontSize="14" />
+                    <TextBlock Text="{Binding Path=Description, Mode=OneWay}" FontSize="14" />
+                </DockPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="FriendlyName:   " />
+                    <TextBlock Text="{Binding Path=FriendlyName, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="Class Guid:    " />
+                    <TextBlock Text="{Binding Path=ClassGuid, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="Device ID:    " />
+                    <TextBlock Text="{Binding Path=DeviceID, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="DevInst:    " />
+                    <TextBlock Text="{Binding Path=DevInstID, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Parent:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ParentDevices}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Child:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ChildDevices}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="Install State:    " />
+                    <TextBlock Text="{Binding Path=InstallStateStr, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="Dev Problem:    " />
+                    <TextBlock Text="{Binding Path=DevProblemStr, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Dev Status:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding DevStatusStr}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <DockPanel LastChildFill="True">
+                    <TextBlock FontWeight="Bold" Text="RebootRequired:    " />
+                    <TextBlock Text="{Binding Path=RebootRequired, Mode=OneWay}" />
+                </DockPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Install Flags:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding InstallFlagsStr}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Capabilities:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding CapabilitiesStr}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Config Flags:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding ConfigFlagsStr}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Oem Inf(s):    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding OemInfs}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock>
+                                        <TextBlock Text="File: "/><TextBlock FontWeight="Bold" Text="{Binding FileName, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <TextBlock Text="Install Date: "/><TextBlock Text="{Binding InstallDate, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <TextBlock Text="Class: "/><TextBlock Text="{Binding Class, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <TextBlock Text="Provider: "/><TextBlock Text="{Binding Provider, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock>
+                                        <TextBlock Text="Is Valid: "/><TextBlock Text="{Binding IsValid, Mode=OneWay}"/>
+                                    </TextBlock>
+                                    <TextBlock/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Hardware IDs:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding HardwareIDs}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Compatible IDs:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding CompatibleIDs}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="LowerFilters:    " />
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding LowerFilters}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel Visibility="{Binding Path=DriverInfo, Mode=OneWay, Converter={StaticResource NullToVis}}">
+                    <TextBlock FontWeight="Bold"
                                Text="{Binding Path=DriverInfo.Length, FallbackValue=0, StringFormat='{}Driver(s) Details: ( Count: {0} )'}"/>
-
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding DriverInfo}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-									</Grid.RowDefinitions>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition MinWidth="100" Width="Auto" />
-										<ColumnDefinition MinWidth="10" Width="10" MaxWidth="10" />
-										<ColumnDefinition MinWidth="100" Width="*" />
-									</Grid.ColumnDefinitions>
-
-									<TextBlock Grid.Row="0" Grid.Column="0" Text="Description:" HorizontalAlignment="Right" />
-									<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Description, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="1" Grid.Column="0" Text="Manufacturer:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=MfgName, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="2" Grid.Column="0" Text="Provider Name:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=ProviderName, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="3" Grid.Column="0" Text="Driver Version:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=DriverVersion, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="4" Grid.Column="0" Text="Driver Date:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Path=DriverDate, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="5" Grid.Column="0" Text="Inf FileName:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Path=InfFile.FileName, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="6" Grid.Column="0" Text="Inf Install Date:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Path=InfFile.InstallDate, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="7" Grid.Column="0" Text="Inf Details:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="7" Grid.Column="2" >
-										<TextBlock Text="{Binding Path=InfFile.Class, Mode=OneWay, StringFormat='{}Class: {0}'}" />
-										<TextBlock Text="   /   " />
-										<TextBlock Text="{Binding Path=InfFile.Provider, Mode=OneWay, StringFormat='{}Provider: {0}'}" />
-										<TextBlock Text="   /   " />
-										<TextBlock Text="{Binding Path=InfFile.IsValid, Mode=OneWay, StringFormat='{}Valid: {0}'}" />
-									</TextBlock>
-
-									<TextBlock Grid.Row="8" Grid.Column="0" Text="Hardware ID:" HorizontalAlignment="Right"/>
-									<TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Path=HardwareID, Mode=OneWay}" />
-
-									<TextBlock Grid.Row="9" Grid.Column="0" Text="Compatible IDs:" HorizontalAlignment="Right"/>
-
-									<ItemsControl Grid.Row="9" Grid.Column="2" ItemsSource="{Binding CompatibleIDs}">
-										<ItemsControl.ItemTemplate>
-											<DataTemplate>
-												<TextBlock Text="{Binding}"/>
-											</DataTemplate>
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
-
-									<Separator Margin="0,5,0,5" Grid.Row="10" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
-								</Grid>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-
-				<TextBlock />
-
-				<StackPanel Visibility="{Binding Path=SiblingDevices, Mode=OneWay, Converter={StaticResource NullToVis}}">
-					<TextBlock FontWeight="Bold" 
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding DriverInfo}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="100" Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition MinWidth="100" Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Description:" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Description, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Manufacturer:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=MfgName, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Provider Name:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=ProviderName, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Driver Version:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=DriverVersion, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Driver Date:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Path=DriverDate, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Inf FileName:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Path=InfFile.FileName, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Inf Install Date:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Path=InfFile.InstallDate, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Inf Details:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="2" >
+                                        <TextBlock Text="{Binding Path=InfFile.Class, Mode=OneWay, StringFormat='{}Class: {0}'}" />
+                                        <TextBlock Text="   /   " />
+                                        <TextBlock Text="{Binding Path=InfFile.Provider, Mode=OneWay, StringFormat='{}Provider: {0}'}" />
+                                        <TextBlock Text="   /   " />
+                                        <TextBlock Text="{Binding Path=InfFile.IsValid, Mode=OneWay, StringFormat='{}Valid: {0}'}" />
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="8" Grid.Column="0" Text="Hardware ID:" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="8" Grid.Column="2" Text="{Binding Path=HardwareID, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="9" Grid.Column="0" Text="Compatible IDs:" HorizontalAlignment="Right"/>
+                                    <ItemsControl Grid.Row="9" Grid.Column="2" ItemsSource="{Binding CompatibleIDs}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Separator Margin="0,5,0,5" Grid.Row="10" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <TextBlock />
+                <StackPanel Visibility="{Binding Path=SiblingDevices, Mode=OneWay, Converter={StaticResource NullToVis}}">
+                    <TextBlock FontWeight="Bold"
                                Text="{Binding Path=SiblingDevices.Length, FallbackValue=0, StringFormat='{}Sibling(s): ( Count: {0} )'}"/>
+                    <ItemsControl Margin="20,0,0,0" ItemsSource="{Binding SiblingDevices}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MinWidth="100" Width="Auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition MinWidth="100" Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Description:" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Description, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="FriendlyName:" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=FriendlyName, TargetNullValue=&lt;null&gt;, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ClassName:" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=ClassName, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Device ID:" HorizontalAlignment="Right" />
+                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=DeviceID, Mode=OneWay}" />
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="LowerFilters:" HorizontalAlignment="Right" />
+                                    <ItemsControl Grid.Row="4" Grid.Column="2" ItemsSource="{Binding LowerFilters}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Separator Margin="0,5,0,5" Grid.Row="5" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+                <Separator Margin="0,5,0,5" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                <TextBlock />
+            </StackPanel>
+        </DataTemplate>
 
-					<ItemsControl Margin="20,0,0,0" ItemsSource="{Binding SiblingDevices}">
-						<ItemsControl.ItemTemplate>
-							<DataTemplate>
-								<Grid>
-									<Grid.RowDefinitions>
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-										<RowDefinition Height="Auto" />
-									</Grid.RowDefinitions>
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition MinWidth="100" Width="Auto" />
-										<ColumnDefinition MinWidth="10" Width="10" MaxWidth="10" />
-										<ColumnDefinition MinWidth="100" Width="*" />
-									</Grid.ColumnDefinitions>
+        <ContextMenu x:Key="cm">
+            <MenuItem x:Name="copyDevice" Header="Copy Selected Device" Command="Copy" CommandParameter="CopyDevice"/>
+        </ContextMenu>
 
-									<TextBlock Grid.Row="0" Grid.Column="0" Text="Description:" HorizontalAlignment="Right" />
-									<TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=Description, Mode=OneWay}" />
+    </Window.Resources>
 
-									<TextBlock Grid.Row="1" Grid.Column="0" Text="FriendlyName:" HorizontalAlignment="Right" />
-									<TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=FriendlyName, TargetNullValue=&lt;null&gt;, Mode=OneWay}" />
+    <!--
+        TabControl:
+          Background = DebugWindowBg  ← TAB STRIP (behind the tabs)
+          BorderBrush = DebugBorder   ← border around the whole tab control
 
-									<TextBlock Grid.Row="2" Grid.Column="0" Text="ClassName:" HorizontalAlignment="Right" />
-									<TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Path=ClassName, Mode=OneWay}" />
+        The content area inside each TabItem is controlled by the Grid's Background.
+        Set to DebugContentBg so it matches the selected tab.
+    -->
+    <TabControl Background="{DynamicResource DebugWindowBg}" BorderBrush="{DynamicResource DebugBorder}">
+        <TabItem Header="Setup API">
+            <Grid Background="{DynamicResource DebugContentBg}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-									<TextBlock Grid.Row="3" Grid.Column="0" Text="Device ID:" HorizontalAlignment="Right" />
-									<TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=DeviceID, Mode=OneWay}" />
+                <!-- Row 3: Device list -->
+                <ListBox Name="listBox1"
+                         Grid.Row="3"
+                         ItemContainerStyle="{StaticResource alternatingListViewItemStyle}"
+                         AlternationCount="2"
+                         ContextMenu="{StaticResource cm}"
+                         ScrollViewer.CanContentScroll="False"
+                         ItemsSource="{Binding ElementName=frmMain, Path=Devices}"
+                         ItemTemplate="{StaticResource logItem}"
+                         Background="{DynamicResource DebugContentBg}"
+                         BorderBrush="{DynamicResource DebugBorder}">
+                    <ListBox.CommandBindings>
+                        <CommandBinding Command="Copy" Executed="CopyCommand" />
+                    </ListBox.CommandBindings>
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="C" Modifiers="Control" Command="Copy" CommandParameter="CopyAll"/>
+                    </ListBox.InputBindings>
+                </ListBox>
 
-									<TextBlock Grid.Row="4" Grid.Column="0" Text="LowerFilters:" HorizontalAlignment="Right" />
-									<ItemsControl Grid.Row="4" Grid.Column="2" ItemsSource="{Binding LowerFilters}">
-										<ItemsControl.ItemTemplate>
-											<DataTemplate>
-												<TextBlock Text="{Binding}"/>
-											</DataTemplate>
-										</ItemsControl.ItemTemplate>
-									</ItemsControl>
+                <!-- Row 0: Action buttons -->
+                <StackPanel Name="stackPanel1" Orientation="Horizontal" Margin="8, 8, 0, 8">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="0,0,5,0" />
+                        </Style>
+                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                            <Setter Property="Margin" Value="5,0,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="disable" Height="23" Name="btnDisable" Width="75" Click="BtnDisable_Click" />
+                    <Button Content="enable" Height="23" Name="btnEnable" Width="75" Click="BtnEnable_Click" />
+                    <Button Content="remove" Height="23" Name="btnRemove" Width="75" Click="BtnRemove_Click" />
+                    <Button Content="update inf" Height="23" Name="btnUpdate" Width="75" Click="BtnUpdate_Click" />
+                    <Button Content="remove inf" Height="23" Name="btnRemoveInf" Width="75" Click="BtnRemoveInf_Click" />
+                    <Button Content="ReScan devices" Height="23" Name="btnReScanDevices" Width="89" />
+                    <CheckBox Content="Include Siblings" Name="chbSearchSiblings" />
+                </StackPanel>
 
-									<Separator Margin="0,5,0,5" Grid.Row="5" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
-								</Grid>
-							</DataTemplate>
-						</ItemsControl.ItemTemplate>
-					</ItemsControl>
-				</StackPanel>
-				<Separator Margin="0,5,0,5" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                <!-- Row 1: Device filter bar -->
+                <DockPanel Grid.Row="1" Margin="0, 0, 0,8 ">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Device Filter:" VerticalAlignment="Center" />
+                        <ComboBox x:Name="cbFilterDev" Width="150" SelectedIndex="0" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                        <Button Content="Find devices" Height="23" Name="btnFindDevs" Width="120" Click="BtnFindDevs_Click" Margin="8,0,0,0" />
+                        <Label Width="80" Content="Devices: 0" Height="28" Name="lblDevicesDev" />
+                    </StackPanel>
+                    <TextBox Name="tbFilterDev" Text="display" VerticalContentAlignment="Center" VerticalAlignment="Center" />
+                </DockPanel>
 
-				<TextBlock />
+                <!-- Row 2: Secondary filter bar -->
+                <DockPanel Grid.Row="2">
+                        <Label Content="Filter:" VerticalAlignment="Center" />
+                        <ComboBox x:Name="cbFilter" Width="150" SelectedIndex="6" SelectionChanged="CbFilter_SelectionChanged" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}"/>
+                    <Label Width="80" Content="Items: 0" Height="28" Name="lblDevices" DockPanel.Dock="Right"/>
+                    <TextBox Name="tbFilter" TextChanged="TbFilter_TextChanged" />
+                </DockPanel>
+            </Grid>
+        </TabItem>
 
-			</StackPanel>
-		</DataTemplate>
+        <TabItem Header="File IO">
+            <Grid Background="{DynamicResource DebugContentBg}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-		<ContextMenu x:Key="cm">
-			<MenuItem x:Name="copyDevice" Header="Copy Selected Device" Command="Copy" CommandParameter="CopyDevice"/>
-		</ContextMenu>
+                <!-- Row 2: File list -->
+                <ListView Grid.ColumnSpan="2" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource DebugContentBg}" Foreground="{DynamicResource DebugText}" BorderBrush="{DynamicResource DebugBorder}">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete!" Name="menuFileIODelete" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+                            <Setter Property="ToolTip" Value="{Binding Path=FlagsList, Mode=OneWay}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource bSelected}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource bSelectedText}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Path" DisplayMemberBinding="{Binding Path=Path, Mode=OneWay}" Width="384" />
+                            <GridViewColumn Header="Attributes" DisplayMemberBinding="{Binding Path=FlagsStr, Mode=OneWay}" Width="96" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-		<Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type Control}">
-			<Style.Triggers>
-				<Trigger Property="ItemsControl.AlternationIndex" Value="1">
-					<Setter Property="Background" Value="{DynamicResource DebugPanelBg}"></Setter>
-				</Trigger>
-				<Trigger Property="ItemsControl.AlternationIndex" Value="2">
-					<Setter Property="Background" Value="{DynamicResource DebugWindowBg}"></Setter>
-				</Trigger>
-			</Style.Triggers>
-		</Style>
-	</Window.Resources>
+                <!-- Row 0: Path input + action buttons -->
+                <TextBox Name="tbPath" VerticalScrollBarVisibility="Disabled" TextWrapping="Wrap" Text="C:\Windows" />
 
-	<TabControl Background="{DynamicResource DebugWindowBg}" BorderBrush="{DynamicResource DebugBorder}">
-		<TabItem Header="Setup API">
-			<Grid Background="{DynamicResource DebugWindowBg}">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Margin" Value="6,0,0, 0" />
+                            <Setter Property="Padding" Value="8, 6"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Content="Get Files" Name="btnGetFiles" />
+                    <Button Content="Get Folders" Name="btnGetFolders" />
+                    <Button Content="Cancel" Name="btnCancel" />
+                </StackPanel>
 
+                <!-- Row 1: Options bar -->
+                <StackPanel Grid.ColumnSpan="2" Grid.Row="1" Name="StackPanel2" Orientation="Horizontal" Margin="8">
+                    <CheckBox Content="Sub folders" Name="chkSubFolders" IsChecked="True" Margin="0,0,48,0"/>
+                    <TextBlock Text="Wildcard:" VerticalAlignment="Center" />
+                    <TextBox Name="tbWildCards" Text="*" MinWidth="80" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="4,0,48,0" />
+                    <TextBlock Name="tbStatus" VerticalAlignment="Center" Foreground="{DynamicResource DebugText}">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}Status: {0} / {1}">
+                                <Binding ElementName="frmMain" Path="Current" Mode="OneWay" />
+                                <Binding ElementName="frmMain" Path="Count" Mode="OneWay" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </TabItem>
 
-				<ListBox Name="listBox1" 
-                 Grid.Row="3" 
-                 ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" 
-                 AlternationCount="2" 
-                 ContextMenu="{StaticResource cm}"
-                 ScrollViewer.CanContentScroll="False"
-                 ItemsSource="{Binding ElementName=frmMain, Path=Devices}"
-                 ItemTemplate="{StaticResource logItem}"
-                 Background="{DynamicResource DebugWindowBg}"
-                 BorderBrush="{DynamicResource DebugBorder}">
-
-					<ListBox.CommandBindings>
-						<CommandBinding Command="Copy" Executed="CopyCommand" />
-					</ListBox.CommandBindings>
-					<ListBox.InputBindings>
-						<KeyBinding Key="C" Modifiers="Control" Command="Copy" CommandParameter="CopyAll"/>
-					</ListBox.InputBindings>
-				</ListBox>
-
-				<StackPanel Name="stackPanel1" Orientation="Horizontal">
-					<StackPanel.Resources>
-						<Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-							<Setter Property="Margin" Value="5,10,0,10" />
-						</Style>
-
-						<Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
-							<Setter Property="Margin" Value="5,10,0,10" />
-						</Style>
-					</StackPanel.Resources>
-
-					<Button Content="disable" Height="23" Name="btnDisable" Width="75" Click="BtnDisable_Click" />
-					<Button Content="enable" Height="23" Name="btnEnable" Width="75" Click="BtnEnable_Click" />
-					<Button Content="remove" Height="23" Name="btnRemove" Width="75" Click="BtnRemove_Click" />
-					<Button Content="update inf" Height="23" Name="btnUpdate" Width="75" Click="BtnUpdate_Click" />
-					<Button Content="remove inf" Height="23" Name="btnRemoveInf" Width="75" Click="BtnRemoveInf_Click" />
-					<Button Content="ReScan devices" Height="23" Name="btnReScanDevices" Width="89" />
-					<CheckBox Content="Include Siblings" Height="16" Name="chbSearchSiblings" />
-				</StackPanel>
-
-				<DockPanel Grid.Row="1">
-					<StackPanel Orientation="Horizontal">
-						<Label Content="Device Filter:" VerticalAlignment="Center" />
-						<ComboBox x:Name="cbFilterDev" Width="150" HorizontalAlignment="Center" SelectedIndex="0" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}" />
-					</StackPanel>
-
-					<StackPanel Orientation="Horizontal" DockPanel.Dock="Right" >
-						<Button Content="Find devices" Height="23" Name="btnFindDevs" Width="120" Click="BtnFindDevs_Click" Margin="10,10,0,10" />
-						<Label Width="80" Content="Devices: 0" Height="28" Name="lblDevicesDev" DockPanel.Dock="Right" />
-					</StackPanel>
-
-					<TextBox Name="tbFilterDev" Text="display" VerticalContentAlignment="Center" VerticalAlignment="Center" />
-				</DockPanel>
-
-				<DockPanel Grid.Row="2" Background="{x:Null}">
-					<Label Content="Filter:"/>
-                    <ComboBox x:Name="cbFilter" Width="150" HorizontalAlignment="Center" SelectedIndex="6" SelectionChanged="CbFilter_SelectionChanged" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}"/>
-
-					<Label Width="80" Content="Items: 0" Height="28" Name="lblDevices" DockPanel.Dock="Right" />
-
-					<TextBox Name="tbFilter" TextChanged="TbFilter_TextChanged" />
-				</DockPanel>
-			</Grid>
-		</TabItem>
-
-		<TabItem Header="File IO">
-			<Grid Background="{DynamicResource DebugWindowBg}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="386*" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-
-				<ListView Grid.ColumnSpan="3" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource DebugWindowBg}" Foreground="{DynamicResource DebugText}" BorderBrush="{DynamicResource DebugBorder}">
-					<ListView.ContextMenu>
-						<ContextMenu >
-							<MenuItem Header="Delete!" Name="menuFileIODelete" />
-						</ContextMenu>
-					</ListView.ContextMenu>
-					
-					<ListView.ItemContainerStyle>
-						<Style TargetType="{x:Type ListViewItem}">
-							<Setter Property="ToolTip" Value="{Binding Path=FlagsList, Mode=OneWay}"/>
-							<Setter Property="Foreground" Value="{DynamicResource DebugText}"/>
-							<Style.Triggers>
-								<Trigger Property="IsMouseOver" Value="True">
-									<Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
-								</Trigger>
-								<Trigger Property="IsSelected" Value="True">
-									<Setter Property="Background" Value="{DynamicResource bSelected}" />
-								</Trigger>
-							</Style.Triggers>
-						</Style>
-					</ListView.ItemContainerStyle>
-
-					<ListView.View>
-						<GridView>
-							<GridViewColumn Header="Path" DisplayMemberBinding="{Binding Path=Path, Mode=OneWay}" Width="350" />
-							<GridViewColumn Header="Attributes" DisplayMemberBinding="{Binding Path=FlagsStr, Mode=OneWay}" Width="150"  />
-						</GridView>
-					</ListView.View>
-				</ListView>
-
-				<TextBox Name="tbPath" VerticalScrollBarVisibility="Disabled" TextWrapping="Wrap" Text="C:\Windows" />
-
-				<StackPanel Grid.Column="1" Orientation="Horizontal">
-					<Button Content="Get Files"  Height="28" Name="btnGetFiles" VerticalAlignment="Center" Width="60" Margin="6" />
-					<Button Content="Get Folders"  Height="28" Name="btnGetFolders" VerticalAlignment="Center" Width="70" Margin="6" />
-					<Button Content="Cancel"  Height="28" Name="btnCancel" VerticalAlignment="Center" Width="50" Margin="6" />
-				</StackPanel>
-				
-				<StackPanel Grid.ColumnSpan="3" Grid.Row="1" Name="StackPanel2" Orientation="Horizontal" Margin="6">
-					<CheckBox Content="Sub folders" Height="16" Name="chkSubFolders" IsChecked="True" />
-					<Separator Margin="20,0" />
-					<Separator Margin="20,0" />
-					<TextBlock Text="Wildcard:" VerticalAlignment="Center" />
-					<TextBox Name="tbWildCards" VerticalScrollBarVisibility="Disabled" Text="*" MinWidth="80" VerticalContentAlignment="Center" VerticalAlignment="Center" />
-					<Separator Margin="20,0" />
-					<TextBlock Name="tbStatus" VerticalAlignment="Center" >
-						<TextBlock.Text>
-							<MultiBinding StringFormat="{}Status: {0} / {1}">
-								<Binding ElementName="frmMain" Path="Current" Mode="OneWay" />
-								<Binding ElementName="frmMain" Path="Count" Mode="OneWay" />
-							</MultiBinding>
-						</TextBlock.Text>
-					</TextBlock>
-				</StackPanel>
-			</Grid>
-		</TabItem>
-	</TabControl>
-
+    </TabControl>
 </Window>
