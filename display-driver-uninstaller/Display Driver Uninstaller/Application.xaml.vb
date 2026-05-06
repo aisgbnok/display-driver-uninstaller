@@ -79,9 +79,7 @@ Namespace Display_Driver_Uninstaller
             Dim noticeOwner As Window = If(owner, TryCast(Current?.MainWindow, Window))
             Dim resolvedTitle As String = If(String.IsNullOrWhiteSpace(title), Application.Settings.AppName, title)
 
-            If m_dispatcher Is Nothing Then
-                Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
-            End If
+            Debug.Assert(m_dispatcher IsNot Nothing)
 
             If Not m_dispatcher.CheckAccess() Then
                 Return CType(m_dispatcher.Invoke(Function() ShowThemedNotice(message, title, buttons, owner)), MessageBoxResult)
@@ -98,38 +96,38 @@ Namespace Display_Driver_Uninstaller
         ''' Defines and applies all Brushes, Colors, and Gradients directly to Application.Current.Resources.
         ''' </summary>
         Public Shared Sub SetGlobalTheme()
-            If m_dispatcher IsNot Nothing AndAlso Not m_dispatcher.CheckAccess() Then
+            Debug.Assert(m_dispatcher IsNot Nothing)
+            If Not m_dispatcher.CheckAccess() Then
                 m_dispatcher.Invoke(Sub() SetGlobalTheme())
                 Return
             End If
 
             Dim isDark As Boolean = Settings.UseDarkTheme
+            If isDark AndAlso _themeDark Is Nothing Then
+                _themeDark = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Dark.xaml", UriKind.Relative)}
+            End If
+
             Dim newTheme As ResourceDictionary = If(isDark, _themeDark, _themeLight)
 
             If _activeTheme IsNot newTheme Then
-                If _activeTheme IsNot Nothing Then
-                    Current.Resources.MergedDictionaries.Remove(_activeTheme)
-                End If
-
+                Current.Resources.MergedDictionaries.Remove(_activeTheme)
                 Current.Resources.MergedDictionaries.Add(newTheme)
                 _activeTheme = newTheme
             End If
         End Sub
 
 		Public Sub New()
-			m_Data = New Data()
-			m_dispatcher = Me.Dispatcher
-
-			' Eagerly and symmetrically instantiate theme dictionaries
-			_themeLight = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Light.xaml", UriKind.Relative)}
-			_themeDark = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Dark.xaml", UriKind.Relative)}
-
 			'ALL Exceptions are shown in English
 			Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
 			Thread.CurrentThread.CurrentUICulture = New CultureInfo("en-US")
 
 			FrameworkElement.LanguageProperty.OverrideMetadata(GetType(FrameworkElement),
 		   New FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)))
+
+			m_dispatcher = Me.Dispatcher
+			m_Data = New Data()
+
+			_themeLight = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Light.xaml", UriKind.Relative)}
 		End Sub
 
 		Public Shared Sub SaveData()
@@ -389,13 +387,16 @@ Namespace Display_Driver_Uninstaller
 		End Sub
 
 		Private Sub Application_Startup(sender As Object, e As System.Windows.StartupEventArgs) Handles Me.Startup
-            'If WindowsIdentity.GetCurrent().IsSystem Then
-            '	MessageBox.Show("Attach debugger!")		' for Debugging System process
-            '	IsDebug = True
-            'End If
+			'If WindowsIdentity.GetCurrent().IsSystem Then
+			'	MessageBox.Show("Attach debugger!")		' for Debugging System process
+			'	IsDebug = True
+			'End If
 
-            ' Force software rendering
-            RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly
+			Current.Resources.MergedDictionaries.Add(_themeLight)
+			_activeTheme = _themeLight
+
+			' Force software rendering
+			RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly
 
 			' Vérify if we started as a service
 			If Environment.CommandLine.Contains("/service") Then

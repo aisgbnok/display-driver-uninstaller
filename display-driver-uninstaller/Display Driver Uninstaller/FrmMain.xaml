@@ -14,11 +14,56 @@
 	Visibility="Visible" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <BitmapImage x:Key="logoAMD" UriSource="/Display%20Driver%20Uninstaller;component/Resources/amd_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" po:Freeze="True" />
-        <BitmapImage x:Key="logoNvidia" UriSource="/Display%20Driver%20Uninstaller;component/Resources/nvidia_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" po:Freeze="True" />
-        <BitmapImage x:Key="logoIntel" UriSource="/Display%20Driver%20Uninstaller;component/Resources/intel_logo.jpg" DecodePixelWidth="384" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" po:Freeze="True" />
-        <BitmapImage x:Key="logoRealtek" UriSource="/Display%20Driver%20Uninstaller;component/Resources/realtek-logo.png" DecodePixelWidth="384" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" po:Freeze="True" />
-        <BitmapImage x:Key="logoSoundBlaster" UriSource="/Display%20Driver%20Uninstaller;component/Resources/creative_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" CreateOptions="IgnoreImageCache" po:Freeze="True" />
+        <BitmapImage x:Key="imgDonateSource" UriSource="/Display%20Driver%20Uninstaller;component/Resources/btn_donate_LG.gif" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="imgPatronSource" UriSource="/Display%20Driver%20Uninstaller;component/Resources/become_a_patron_button.png" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="imgDiscordSource" UriSource="/Display%20Driver%20Uninstaller;component/Resources/discord@2x.png" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="imgOfferSource" UriSource="/Display%20Driver%20Uninstaller;component/Resources/btn_partner.png" CacheOption="OnLoad" po:Freeze="True" />
+
+        <Style x:Key="DonateButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Source="{StaticResource imgDonateSource}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PatronButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Source="{StaticResource imgPatronSource}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DiscordButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Source="{StaticResource imgDiscordSource}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="OfferButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Image Source="{StaticResource imgOfferSource}" ToolTip="{Binding ElementName=lblOffer, Path=ToolTip, Mode=OneWay}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <BitmapImage x:Key="logoAMD" UriSource="/Display%20Driver%20Uninstaller;component/Resources/amd_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="logoNvidia" UriSource="/Display%20Driver%20Uninstaller;component/Resources/nvidia_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="logoIntel" UriSource="/Display%20Driver%20Uninstaller;component/Resources/intel_logo.jpg" DecodePixelWidth="384" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="logoRealtek" UriSource="/Display%20Driver%20Uninstaller;component/Resources/realtek-logo.png" DecodePixelWidth="384" CacheOption="OnLoad" po:Freeze="True" />
+        <BitmapImage x:Key="logoSoundBlaster" UriSource="/Display%20Driver%20Uninstaller;component/Resources/creative_logo.png" DecodePixelWidth="384" CacheOption="OnLoad" po:Freeze="True" />
         <conv:BooleanToVisibilityConverter x:Key="BoolToVisibility" TrueValue="Visible" FalseValue="Collapsed" />
         <conv:BooleanToString x:Key="BoolToStr" TrueValue="x64" FalseValue="x86" />
         <conv:EnumToTextConverter x:Key="EnumToText" />
@@ -191,13 +236,7 @@
             <StackPanel Visibility="{Binding Settings.ShowOffer, Mode=OneWay, Converter={StaticResource BoolToVisibility}}" DockPanel.Dock="Top" VerticalAlignment="Center">
                 <Label x:Name="lblOffer" FontWeight="Bold" Content="lblOffer" HorizontalContentAlignment="Center" FontSize="11" Foreground="{DynamicResource App.Text.Primary}" />
 
-                <Button x:Name="imgOffer">
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="Resources/btn_partner.png" ToolTip="{Binding ElementName=lblOffer, Path=ToolTip, Mode=OneWay}"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button x:Name="imgOffer" Style="{StaticResource OfferButtonStyle}" />
             </StackPanel>
         </DockPanel>
 
@@ -224,27 +263,9 @@
 
                 <TextBlock x:Name="lblDonate" Grid.Column="0" Text="lblDonate" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="6,5.585,6,5.584" Foreground="{DynamicResource App.Text.Primary}" />
 
-                <Button x:Name="imgDonate" Grid.Column="1" HorizontalAlignment="Left" Width="96" >
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="Resources/btn_donate_LG.gif"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="imgPatron" Grid.Column="2" Width="96" Margin="0,0,3.362,0" HorizontalAlignment="right" >
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="Resources/become_a_patron_button.png"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-                <Button x:Name="imgDiscord" Grid.Column="3" Width="32" Margin="0,0,3.362,0" HorizontalAlignment="right" MaxHeight="32" >
-                    <Button.Template>
-                        <ControlTemplate>
-                            <Image Source="Resources/discord@2x.png"/>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button x:Name="imgDonate" Grid.Column="1" HorizontalAlignment="Left" Width="96" Style="{StaticResource DonateButtonStyle}" />
+                <Button x:Name="imgPatron" Grid.Column="2" Width="96" Margin="0,0,3.362,0" HorizontalAlignment="right" Style="{StaticResource PatronButtonStyle}" />
+                <Button x:Name="imgDiscord" Grid.Column="3" Width="32" Margin="0,0,3.362,0" HorizontalAlignment="right" MaxHeight="32" Style="{StaticResource DiscordButtonStyle}" />
             </Grid>
         </Border>
         <DockPanel Grid.Column="3" Grid.Row="3" >
