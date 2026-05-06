@@ -13,13 +13,13 @@
 
 
 		<Style TargetType="{x:Type Label}">
-			<Setter Property="Foreground" Value="{DynamicResource LaunchTextBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
 		</Style>
 
 		<Style TargetType="{x:Type ComboBox}">
-			<Setter Property="Foreground" Value="{DynamicResource LaunchTextBrush}" />
-			<Setter Property="Background" Value="{DynamicResource LaunchPanelBrush}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource LaunchBorderBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="Padding" Value="8,2,28,2" />
 			<Setter Property="MinHeight" Value="24" />
@@ -34,7 +34,7 @@
 								<ToggleButton.Template>
 									<ControlTemplate TargetType="{x:Type ToggleButton}">
 										<Border x:Name="ComboBorder"
-												Background="{DynamicResource LaunchPanelBrush}"
+												Background="{DynamicResource App.Surface.Panel}"
 												BorderBrush="{TemplateBinding BorderBrush}"
 												BorderThickness="{TemplateBinding BorderThickness}">
 											<Grid>
@@ -48,7 +48,7 @@
 																  Content="{TemplateBinding Content}" />
 												<TextBlock Grid.Column="1"
 														   Text="▼"
-														   Foreground="{DynamicResource LaunchTextBrush}"
+														   Foreground="{DynamicResource App.Text.Primary}"
 														   VerticalAlignment="Center"
 														   HorizontalAlignment="Center"
 														   FontSize="10" />
@@ -56,10 +56,10 @@
 										</Border>
 										<ControlTemplate.Triggers>
 											<Trigger Property="IsMouseOver" Value="True">
-												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource LaunchPanelHoverBrush}" />
+												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 											</Trigger>
 											<Trigger Property="IsChecked" Value="True">
-												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource LaunchPanelHoverBrush}" />
+												<Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 											</Trigger>
 										</ControlTemplate.Triggers>
 									</ControlTemplate>
@@ -80,8 +80,8 @@
 								   AllowsTransparency="True"
 								   Focusable="False"
 								   PopupAnimation="Slide">
-								<Border Background="{DynamicResource LaunchPanelBrush}"
-										BorderBrush="{DynamicResource LaunchBorderBrush}"
+								<Border Background="{DynamicResource App.Surface.Panel}"
+										BorderBrush="{DynamicResource App.Border}"
 										BorderThickness="1"
 										MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
 									<ScrollViewer SnapsToDevicePixels="True">
@@ -104,23 +104,23 @@
 		</Style>
 
 		<Style TargetType="{x:Type ComboBoxItem}">
-			<Setter Property="Foreground" Value="{DynamicResource LaunchTextBrush}" />
-			<Setter Property="Background" Value="{DynamicResource LaunchPanelBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
 			<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 			<Style.Triggers>
 				<Trigger Property="IsHighlighted" Value="True">
-					<Setter Property="Background" Value="{DynamicResource LaunchPanelHoverBrush}" />
+					<Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 				</Trigger>
 				<Trigger Property="IsSelected" Value="True">
-					<Setter Property="Background" Value="{DynamicResource LaunchSelectionBrush}" />
+					<Setter Property="Background" Value="{DynamicResource App.Selection.Background}" />
 				</Trigger>
 			</Style.Triggers>
 		</Style>
 
 		<Style TargetType="{x:Type Button}">
-			<Setter Property="Foreground" Value="{DynamicResource LaunchTextBrush}" />
-			<Setter Property="Background" Value="{DynamicResource LaunchPanelBrush}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource LaunchBorderBrush}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="Template">
 				<Setter.Value>
@@ -135,10 +135,10 @@
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource LaunchPanelHoverBrush}" />
+								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 							</Trigger>
 							<Trigger Property="IsPressed" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource LaunchPanelPressedBrush}" />
+								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Pressed}" />
 							</Trigger>
 							<Trigger Property="IsEnabled" Value="False">
 								<Setter TargetName="ButtonBorder" Property="Opacity" Value="0.55" />
@@ -150,7 +150,7 @@
 		</Style>
 	</Window.Resources>
 
-	<Grid Background="{DynamicResource LaunchSurfaceBrush}">
+	<Grid Background="{DynamicResource App.Surface.Window}">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
@@ -163,7 +163,7 @@
 			<RowDefinition Height="55" />
 		</Grid.RowDefinitions>
 
-		<Border BorderThickness="1" BorderBrush="{DynamicResource LaunchBorderBrush}" Background="{DynamicResource LaunchPanelBrush}" Margin="-1,-1,-1,0" Grid.ColumnSpan="2">
+		<Border BorderThickness="1" BorderBrush="{DynamicResource App.Border}" Background="{DynamicResource App.Surface.Panel}" Margin="-1,-1,-1,0" Grid.ColumnSpan="2">
 			<Image Name="Image1" Source="/Resources/ddu_logo.png" Stretch="Uniform" Margin="6" />
 		</Border>
 
@@ -172,12 +172,12 @@
 			<ComboBox DockPanel.Dock="Top" x:Name="cbBootOption" SelectedIndex="0" Grid.Row="2" FlowDirection="{Binding Path=Settings.FlowControl}"/>
 		</DockPanel>
 		<DockPanel Grid.Row="2" Grid.ColumnSpan="2">
-			<Label DockPanel.Dock="Top" Name="lblNotSafeMode" Content="lblNotSafeMode" Grid.Row="3" Margin="6" Foreground="{DynamicResource LaunchTextBrush}" FontSize="13" FontStyle="Normal" FontWeight="SemiBold" VerticalContentAlignment="Center" FlowDirection="{Binding Path=Settings.FlowControl}"/>
-			<Label DockPanel.Dock="Top" Name="lblWinPasswordWarn" Content="lblWinPasswordWarn" Grid.Row="3" Margin="6" Foreground="{DynamicResource LaunchWarningBrush}" FontSize="13" FontStyle="Normal" FontWeight="SemiBold" VerticalContentAlignment="Center"
+			<Label DockPanel.Dock="Top" Name="lblNotSafeMode" Content="lblNotSafeMode" Grid.Row="3" Margin="6" Foreground="{DynamicResource App.Text.Primary}" FontSize="13" FontStyle="Normal" FontWeight="SemiBold" VerticalContentAlignment="Center" FlowDirection="{Binding Path=Settings.FlowControl}"/>
+			<Label DockPanel.Dock="Top" Name="lblWinPasswordWarn" Content="lblWinPasswordWarn" Grid.Row="3" Margin="6" Foreground="{DynamicResource App.Text.Warning}" FontSize="13" FontStyle="Normal" FontWeight="SemiBold" VerticalContentAlignment="Center"
 				   Visibility="{Binding Path=Settings.WinVersion, Mode=OneWay, Converter={StaticResource ValueToVis}, ConverterParameter={x:Static local:OSVersion.Win8}}" FlowDirection="{Binding Path=Settings.FlowControl}"/>
 		</DockPanel>
 
-		<Border Grid.Row="3" BorderBrush="{DynamicResource LaunchBorderBrush}" BorderThickness="1" Background="{DynamicResource LaunchSurfaceBrush}" Margin="-1,0,-1,-1" Grid.ColumnSpan="2">
+		<Border Grid.Row="3" BorderBrush="{DynamicResource App.Border}" BorderThickness="1" Background="{DynamicResource App.Surface.Window}" Margin="-1,0,-1,-1" Grid.ColumnSpan="2">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />

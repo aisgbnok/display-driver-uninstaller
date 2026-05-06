@@ -4,7 +4,7 @@
         xmlns:conv="clr-namespace:Display_Driver_Uninstaller.Converters"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SetupAPI" Height="480" Width="640" MinHeight="480" MinWidth="640" Loaded="Window_Loaded" Background="{DynamicResource DebugWindowBg}" Foreground="{DynamicResource DebugText}">
+        Title="SetupAPI" Height="480" Width="640" MinHeight="480" MinWidth="640" Loaded="Window_Loaded" Background="{DynamicResource App.Surface.Window}" Foreground="{DynamicResource App.Text.Primary}">
 
     <Window.Resources>
         <conv:IsNullConverter x:Key="IsNull" />
@@ -12,33 +12,33 @@
         <conv:CombiningConverter x:Key="NullToVis" Converter1="{StaticResource IsNull}" Converter2="{StaticResource BoolToVis}" />
 
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
         </Style>
 
         <Style TargetType="{x:Type Label}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
         </Style>
 
         <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
         <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="2,2" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="CaretBrush" Value="{DynamicResource DebugText}" />
-            <Setter Property="SelectionBrush" Value="{DynamicResource bSelected}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource App.Selection.ListBackground}" />
         </Style>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="8,2" />
             <Setter Property="Cursor" Value="Hand" />
@@ -57,11 +57,11 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="ButtonBorder" Property="Background"
-                                        Value="{DynamicResource DebugPanelHover}" />
+                                        Value="{DynamicResource App.Surface.Panel.Hover}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
                                 <Setter TargetName="ButtonBorder" Property="Background"
-                                        Value="{DynamicResource DebugPanelPress}" />
+                                        Value="{DynamicResource App.Surface.Panel.Pressed}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.45" />
@@ -73,9 +73,9 @@
         </Style>
 
         <Style x:Key="DebugComboBoxStyle" TargetType="{x:Type ComboBox}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="8,2,28,2" />
             <Setter Property="Height" Value="22" />
@@ -90,7 +90,7 @@
                                 <ToggleButton.Template>
                                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                                         <Border x:Name="ComboBorder"
-                                                Background="{DynamicResource DebugPanelBg}"
+                                                Background="{DynamicResource App.Surface.Panel}"
                                                 BorderBrush="{TemplateBinding BorderBrush}"
                                                 BorderThickness="{TemplateBinding BorderThickness}"
                                                 SnapsToDevicePixels="True">
@@ -101,7 +101,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="1"
                                                            Text="▾"
-                                                           Foreground="{DynamicResource DebugTextMuted}"
+                                                           Foreground="{DynamicResource App.Text.Muted}"
                                                            VerticalAlignment="Center"
                                                            HorizontalAlignment="Center"
                                                            FontSize="14" />
@@ -109,11 +109,11 @@
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                                             </Trigger>
                                             <Trigger Property="IsChecked" Value="True">
-                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
-                                                <Setter TargetName="ComboBorder" Property="BorderBrush" Value="{DynamicResource DebugText}" />
+                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
+                                                <Setter TargetName="ComboBorder" Property="BorderBrush" Value="{DynamicResource App.Text.Primary}" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -134,8 +134,8 @@
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    PopupAnimation="Slide">
-                                <Border Background="{DynamicResource DebugPanelBg}"
-                                        BorderBrush="{DynamicResource DebugBorder}"
+                                <Border Background="{DynamicResource App.Surface.Panel}"
+                                        BorderBrush="{DynamicResource App.Border}"
                                         BorderThickness="1"
                                         MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                         SnapsToDevicePixels="True">
@@ -159,40 +159,40 @@
         </Style>
 
         <Style x:Key="DebugComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
             <Setter Property="Padding" Value="4,2" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Style.Triggers>
                 <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                 </Trigger>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource bSelected}" />
-                    <Setter Property="Foreground" Value="{DynamicResource bSelectedText}" />
+                    <Setter Property="Background" Value="{DynamicResource App.Selection.ListBackground}" />
+                    <Setter Property="Foreground" Value="{DynamicResource App.Selection.Text}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
 
         <Style TargetType="{x:Type ListBox}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugContentBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Control}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
         </Style>
 
         <!-- ═══════════════════════════════════════════════
              TABITEM — folder-tab pattern:
-               inactive  = DebugPanelBg  (recedes into strip)
-               hover     = DebugPanelHover
-               selected  = DebugContentBg (merges with content pane)
+               inactive  = App.Surface.Panel  (recedes into strip)
+               hover     = App.Surface.Panel.Hover
+               selected  = App.Surface.Control (merges with content pane)
              Margin -1 bottom on selected erases the strip border
              so the tab visually IS the content pane.
              ═══════════════════════════════════════════════ -->
         <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="Padding" Value="10,4" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -208,10 +208,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource DebugContentBg}" />
+                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Control}" />
                                 <Setter TargetName="TabBorder" Property="Margin" Value="0,0,4,-3" />
                                 <Setter Property="Panel.ZIndex" Value="1" />
                             </Trigger>
@@ -228,25 +228,25 @@
              GRIDVIEWCOLUMNHEADER
         ═══════════════════════════════════════════════ -->
         <Style TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
-            <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource DebugBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="Padding" Value="8,2" />
         </Style>
 
         <!-- 
         ═══════════════════════════════════════════════
         ALTERNATING LIST ROWS
-            Index 0 = DebugContentBg (base content surface)
-            Index 1 = DebugPanelBg (slightly off from content)
+            Index 0 = App.Surface.Control (base content surface)
+            Index 1 = App.Surface.Panel (slightly off from content)
         ═══════════════════════════════════════════════ -->
         <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                    <Setter Property="Background" Value="{DynamicResource DebugContentBg}" />
+                    <Setter Property="Background" Value="{DynamicResource App.Surface.Control}" />
                 </Trigger>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                    <Setter Property="Background" Value="{DynamicResource DebugPanelBg}" />
+                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -477,7 +477,7 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Separator Margin="0,5,0,5" Grid.Row="10" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                                    <Separator Margin="0,5,0,5" Grid.Row="10" Grid.ColumnSpan="3" BorderBrush="{DynamicResource App.Border}" BorderThickness="2" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -520,13 +520,13 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
-                                    <Separator Margin="0,5,0,5" Grid.Row="5" Grid.ColumnSpan="3" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                                    <Separator Margin="0,5,0,5" Grid.Row="5" Grid.ColumnSpan="3" BorderBrush="{DynamicResource App.Border}" BorderThickness="2" />
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
-                <Separator Margin="0,5,0,5" BorderBrush="{DynamicResource DebugBorder}" BorderThickness="2" />
+                <Separator Margin="0,5,0,5" BorderBrush="{DynamicResource App.Border}" BorderThickness="2" />
                 <TextBlock />
             </StackPanel>
         </DataTemplate>
@@ -539,15 +539,15 @@
 
     <!--
         TabControl:
-          Background = DebugWindowBg  ← TAB STRIP (behind the tabs)
-          BorderBrush = DebugBorder   ← border around the whole tab control
+          Background = App.Surface.Window  ← TAB STRIP (behind the tabs)
+          BorderBrush = App.Border   ← border around the whole tab control
 
         The content area inside each TabItem is controlled by the Grid's Background.
-        Set to DebugContentBg so it matches the selected tab.
+        Set to App.Surface.Control so it matches the selected tab.
     -->
-    <TabControl Background="{DynamicResource DebugWindowBg}" BorderBrush="{DynamicResource DebugBorder}">
+    <TabControl Background="{DynamicResource App.Surface.Window}" BorderBrush="{DynamicResource App.Border}">
         <TabItem Header="Setup API">
-            <Grid Background="{DynamicResource DebugContentBg}">
+            <Grid Background="{DynamicResource App.Surface.Control}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -564,8 +564,8 @@
                          ScrollViewer.CanContentScroll="False"
                          ItemsSource="{Binding ElementName=frmMain, Path=Devices}"
                          ItemTemplate="{StaticResource logItem}"
-                         Background="{DynamicResource DebugContentBg}"
-                         BorderBrush="{DynamicResource DebugBorder}">
+                         Background="{DynamicResource App.Surface.Control}"
+                         BorderBrush="{DynamicResource App.Border}">
                     <ListBox.CommandBindings>
                         <CommandBinding Command="Copy" Executed="CopyCommand" />
                     </ListBox.CommandBindings>
@@ -617,7 +617,7 @@
         </TabItem>
 
         <TabItem Header="File IO">
-            <Grid Background="{DynamicResource DebugContentBg}">
+            <Grid Background="{DynamicResource App.Surface.Control}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -629,7 +629,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- Row 2: File list -->
-                <ListView Grid.ColumnSpan="2" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource DebugContentBg}" Foreground="{DynamicResource DebugText}" BorderBrush="{DynamicResource DebugBorder}">
+                <ListView Grid.ColumnSpan="2" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource App.Surface.Control}" Foreground="{DynamicResource App.Text.Primary}" BorderBrush="{DynamicResource App.Border}">
                     <ListView.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Delete!" Name="menuFileIODelete" />
@@ -637,15 +637,15 @@
                     </ListView.ContextMenu>
                     <ListView.ItemContainerStyle>
                         <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Foreground" Value="{DynamicResource DebugText}" />
+                            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
                             <Setter Property="ToolTip" Value="{Binding Path=FlagsList, Mode=OneWay}" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource DebugPanelHover}" />
+                                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource bSelected}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource bSelectedText}" />
+                                    <Setter Property="Background" Value="{DynamicResource App.Selection.ListBackground}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource App.Selection.Text}" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -678,7 +678,7 @@
                     <CheckBox Content="Sub folders" Name="chkSubFolders" IsChecked="True" Margin="0,0,48,0"/>
                     <TextBlock Text="Wildcard:" VerticalAlignment="Center" />
                     <TextBox Name="tbWildCards" Text="*" MinWidth="80" VerticalContentAlignment="Center" VerticalAlignment="Center" Margin="4,0,48,0" />
-                    <TextBlock Name="tbStatus" VerticalAlignment="Center" Foreground="{DynamicResource DebugText}">
+                    <TextBlock Name="tbStatus" VerticalAlignment="Center" Foreground="{DynamicResource App.Text.Primary}">
                         <TextBlock.Text>
                             <MultiBinding StringFormat="{}Status: {0} / {1}">
                                 <Binding ElementName="frmMain" Path="Current" Mode="OneWay" />

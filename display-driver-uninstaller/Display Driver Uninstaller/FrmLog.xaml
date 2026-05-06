@@ -9,12 +9,12 @@
 
 
 		<Style x:Key="styleNormal" TargetType="{x:Type TextBlock}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}"/>
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}"/>
 			<Setter Property="FontWeight" Value="Bold"/>
 			<Setter Property="FontSize" Value="12"/>
 		</Style>
 		<Style x:Key="styleValue" TargetType="{x:Type TextBlock}">
-			<Setter Property="Foreground" Value="{DynamicResource bValue}"/>
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Value}"/>
 			<Setter Property="FontWeight" Value="Normal"/>
 			<Setter Property="FontSize" Value="12"/>
 		</Style>
@@ -31,16 +31,16 @@
 		<conv:CombiningConverter x:Key="NullToVis" Converter1="{StaticResource NullOrEmpty}" Converter2="{StaticResource BoolToVisibility}" />
 
 		<Style x:Key="LogTextForegroundStyle" TargetType="{x:Type TextBlock}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
 			<Style.Triggers>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Event}">
-					<Setter Property="Foreground" Value="{DynamicResource bValue}" />
+					<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Value}" />
 				</DataTrigger>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Warning}">
-					<Setter Property="Foreground" Value="{DynamicResource bWarning}" />
+					<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Warning}" />
 				</DataTrigger>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Error}">
-					<Setter Property="Foreground" Value="{DynamicResource bError}" />
+					<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Error}" />
 				</DataTrigger>
 			</Style.Triggers>
 		</Style>
@@ -49,13 +49,13 @@
 			<Setter Property="Background" Value="Transparent" />
 			<Style.Triggers>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Event}">
-					<Setter Property="Background" Value="{DynamicResource bgBrushEvent}" />
+					<Setter Property="Background" Value="{DynamicResource App.Log.Background.Event}" />
 				</DataTrigger>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Warning}">
-					<Setter Property="Background" Value="{DynamicResource bgBrushWarning}" />
+					<Setter Property="Background" Value="{DynamicResource App.Log.Background.Warning}" />
 				</DataTrigger>
 				<DataTrigger Binding="{Binding Type}" Value="{x:Static local:LogType.Error}">
-					<Setter Property="Background" Value="{DynamicResource bgBrushError}" />
+					<Setter Property="Background" Value="{DynamicResource App.Log.Background.Error}" />
 				</DataTrigger>
 			</Style.Triggers>
 		</Style>
@@ -73,7 +73,7 @@
 
 				<Grid.Resources>
 					<Style TargetType="{x:Type TextBlock}" >
-						<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
+						<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
 					</Style>
 				</Grid.Resources>
 
@@ -105,7 +105,7 @@
 				<TextBlock Grid.Row="1" 
 						   Grid.Column="0" 
 						   Grid.ColumnSpan="1" 
-						   Foreground="{DynamicResource bNormal}" 
+						   Foreground="{DynamicResource App.Log.Text.Normal}" 
 						   Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" />
 			</Grid>
 		</ControlTemplate>
@@ -143,12 +143,12 @@
 
 		<DataTemplate x:Key="logItem" >
 			<Border BorderThickness="0.5" 
-					BorderBrush="{DynamicResource bBorder}">
+					BorderBrush="{DynamicResource App.Border}">
 				<Border.Style>
 					<Style TargetType="{x:Type Border}" BasedOn="{StaticResource LogBackgroundStyle}">
 						<Style.Triggers>
 							<DataTrigger Binding="{Binding IsSelected}" Value="True">
-								<Setter Property="Background" Value="{DynamicResource bSelected}" />
+								<Setter Property="Background" Value="{DynamicResource App.Log.Selection.Background}" />
 							</DataTrigger>
 						</Style.Triggers>
 					</Style>
@@ -158,19 +158,19 @@
 		</DataTemplate>
 
 		<Style x:Key="LogContextMenuStyle" TargetType="{x:Type ContextMenu}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="1" />
 		</Style>
 
 		<Style x:Key="LogContextMenuItemStyle" TargetType="{x:Type MenuItem}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
 			<Setter Property="Padding" Value="8,3" />
 			<Style.Triggers>
 				<Trigger Property="IsHighlighted" Value="True">
-					<Setter Property="Background" Value="{DynamicResource bPanelHover}" />
+					<Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 				</Trigger>
 			</Style.Triggers>
 		</Style>
@@ -214,22 +214,22 @@
 		</Style>
 
 		<Style x:Key="LogListBoxStyle" TargetType="{x:Type ListBox}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bWindowBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Window}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="0" />
 		</Style>
 
 		<Style x:Key="LogMenuStyle" TargetType="{x:Type Menu}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bWindowBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Window}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="0,0,0,1" />
 		</Style>
 
 		<Style x:Key="LogMenuItemStyle" TargetType="{x:Type MenuItem}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bWindowBg}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Window}" />
 			<Setter Property="Padding" Value="8,3" />
 			<Setter Property="Template">
 				<Setter.Value>
@@ -246,8 +246,8 @@
 									   AllowsTransparency="True"
 									   Focusable="False"
 									   PopupAnimation="Fade">
-									<Border Background="{DynamicResource bPanelBg}"
-											BorderBrush="{DynamicResource bBorder}"
+									<Border Background="{DynamicResource App.Surface.Panel}"
+											BorderBrush="{DynamicResource App.Border}"
 											BorderThickness="1"
 											Padding="1">
 										<StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -257,16 +257,16 @@
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsHighlighted" Value="True">
-								<Setter TargetName="MenuItemBorder" Property="Background" Value="{DynamicResource bPanelHover}" />
+								<Setter TargetName="MenuItemBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 							</Trigger>
 							<Trigger Property="IsSubmenuOpen" Value="True">
-								<Setter TargetName="MenuItemBorder" Property="Background" Value="{DynamicResource bPanelHover}" />
+								<Setter TargetName="MenuItemBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 							</Trigger>
 							<Trigger Property="Role" Value="SubmenuItem">
-								<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
+								<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
 							</Trigger>
 							<Trigger Property="Role" Value="SubmenuHeader">
-								<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
+								<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -275,14 +275,14 @@
 		</Style>
 
 		<Style x:Key="LogTabControlStyle" TargetType="{x:Type TabControl}">
-			<Setter Property="Background" Value="{DynamicResource bWindowBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Window}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 		</Style>
 
 		<Style x:Key="LogTabItemStyle" TargetType="{x:Type TabItem}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="Padding" Value="10,4" />
 			<Setter Property="Template">
 				<Setter.Value>
@@ -296,10 +296,10 @@
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsSelected" Value="True">
-								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource bWindowBg}" />
+								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Window}" />
 							</Trigger>
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource bPanelHover}" />
+								<Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -308,9 +308,9 @@
 		</Style>
 
 		<Style x:Key="LogButtonStyle" TargetType="{x:Type Button}">
-			<Setter Property="Foreground" Value="{DynamicResource bNormal}" />
-			<Setter Property="Background" Value="{DynamicResource bPanelBg}" />
-			<Setter Property="BorderBrush" Value="{DynamicResource bBorder}" />
+			<Setter Property="Foreground" Value="{DynamicResource App.Log.Text.Normal}" />
+			<Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+			<Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
 			<Setter Property="BorderThickness" Value="1" />
 			<Setter Property="Template">
 				<Setter.Value>
@@ -323,10 +323,10 @@
 						</Border>
 						<ControlTemplate.Triggers>
 							<Trigger Property="IsMouseOver" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource bPanelHover}" />
+								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
 							</Trigger>
 							<Trigger Property="IsPressed" Value="True">
-								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource bWindowBg}" />
+								<Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Window}" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -335,7 +335,7 @@
 		</Style>
 	</Window.Resources>
 
-	<Grid x:Name="gridRoot" Background="{DynamicResource bWindowBg}">
+	<Grid x:Name="gridRoot" Background="{DynamicResource App.Surface.Window}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*"  MinHeight="100"/>
@@ -362,7 +362,7 @@
 				 ItemsSource="{Binding}" 
 				 HorizontalContentAlignment="Stretch" 
 				 BorderThickness="0"
-				 Background="{DynamicResource bWindowBg}"
+				 Background="{DynamicResource App.Surface.Window}"
 				 Focusable="False"
 				 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
 				 ScrollViewer.VerticalScrollBarVisibility="Visible" 
@@ -396,13 +396,13 @@
 			</ListBox.Style>
 		</ListBox>
 
-		<GridSplitter Margin="0,0,0,0" Grid.Row="2" ResizeDirection="Rows" ShowsPreview="True" HorizontalAlignment="Stretch" Background="{DynamicResource bBorder}" MinHeight="2" />
+		<GridSplitter Margin="0,0,0,0" Grid.Row="2" ResizeDirection="Rows" ShowsPreview="True" HorizontalAlignment="Stretch" Background="{DynamicResource App.Border}" MinHeight="2" />
 
 		<Border Grid.Row="3" 
 				DataContext="{Binding ElementName=frmLog, Path=SelectedEntry, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
 				Style="{StaticResource LogBackgroundStyle}"
 				BorderThickness="1" 
-				BorderBrush="{DynamicResource bBorder}">
+				BorderBrush="{DynamicResource App.Border}">
 
 			<TabControl Background="{x:Null}" 
 						Grid.Row="1"
@@ -497,12 +497,12 @@
 						 x:Name="tabNoData"
 						 Visibility="{Binding HasAnyData, Mode=OneWay, Converter={StaticResource NotBoolToVisibility},ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}" 
 						 Background="{x:Null}">
-					<TextBlock Text="&lt; No Data &gt;" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource bNormal}"/>
+					<TextBlock Text="&lt; No Data &gt;" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource App.Log.Text.Normal}"/>
 				</TabItem>
 			</TabControl>
 		</Border>
 
-		<Border Grid.Row="4" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource bBorder}" Background="{DynamicResource bWindowBg}">
+		<Border Grid.Row="4" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource App.Border}" Background="{DynamicResource App.Surface.Window}">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto" />
@@ -511,7 +511,7 @@
 				</Grid.ColumnDefinitions>
 
 				<Button Grid.Column="0" Grid.ColumnSpan="1" Margin="10" Content="Open Log" Grid.Row="1" Height="30" Name="btnOpenLog" VerticalAlignment="Top" MinWidth="80" Style="{StaticResource LogButtonStyle}" />
-				<TextBlock Grid.Column="1" Grid.ColumnSpan="1" TextWrapping="Wrap" Name="tbOpenedLog" Visibility="Visible" VerticalAlignment="Center" FontWeight="Bold" Margin="10" Foreground="{DynamicResource bNormal}" />
+				<TextBlock Grid.Column="1" Grid.ColumnSpan="1" TextWrapping="Wrap" Name="tbOpenedLog" Visibility="Visible" VerticalAlignment="Center" FontWeight="Bold" Margin="10" Foreground="{DynamicResource App.Log.Text.Normal}" />
 
 				<StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Grid.Column="2" Grid.ColumnSpan="1">
 					<Button Margin="10" Content="Close" Grid.Row="1" Name="btnClose" HorizontalAlignment="Right" MinWidth="80" Height="30" Style="{StaticResource LogButtonStyle}" />

@@ -16,7 +16,7 @@
 		End Sub
 
         Private Sub lblUseDarkTheme_Click(sender As Object, e As RoutedEventArgs) Handles lblUseDarkTheme.Click
-            Application.ApplyThemeToAllWindows()
+            Application.SetGlobalTheme()
         End Sub
 
         Private Sub Chk_lblPreventWinUpdate(sender As Object, e As RoutedEventArgs) Handles lblPreventWinUpdate.Click

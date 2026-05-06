@@ -11,15 +11,15 @@
 	ShowInTaskbar="False"
 	WindowStartupLocation="CenterOwner"
 	Icon="/Display%20Driver%20Uninstaller;component/Resources/DDU.ico"
-	Background="{DynamicResource NoticeSurfaceBrush}"
-	Foreground="{DynamicResource NoticeTextBrush}">
+	Background="{DynamicResource App.Surface.Window}"
+	Foreground="{DynamicResource App.Text.Primary}">
 
     <Window.Resources>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{DynamicResource NoticeTextBrush}" />
-            <Setter Property="Background" Value="{DynamicResource NoticePanelBrush}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource NoticeBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="Template">
@@ -35,10 +35,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource NoticePanelHoverBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource NoticeSurfaceBrush}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Window}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -47,7 +47,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="{DynamicResource NoticeSurfaceBrush}">
+    <Grid Background="{DynamicResource App.Surface.Window}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -64,7 +64,7 @@
 					Margin="0,2,12,0"
 					VerticalAlignment="Top"
 					CornerRadius="16"
-					Background="{DynamicResource NoticeAccentBrush}"
+					Background="{DynamicResource App.Text.Accent}"
 					BorderBrush="#FFBFD9FF"
 					BorderThickness="1">
                 <TextBlock Text="i"
@@ -84,7 +84,7 @@
 						  Margin="0,1,0,0">
                 <TextBlock x:Name="txtMessage"
 						   TextWrapping="Wrap"
-						   Foreground="{DynamicResource NoticeTextBrush}"
+						   Foreground="{DynamicResource App.Text.Primary}"
 						   FontSize="12"
 						   LineHeight="15.5"
 						   MaxWidth="308" />
@@ -92,9 +92,9 @@
         </Grid>
 
         <Border Grid.Row="1"
-				BorderBrush="{DynamicResource NoticeBorderBrush}"
+				BorderBrush="{DynamicResource App.Border}"
 				BorderThickness="0,1,0,0"
-				Background="{DynamicResource NoticeSurfaceBrush}">
+				Background="{DynamicResource App.Surface.Window}">
             <Grid Margin="12,7,12,8">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button x:Name="btnYes"

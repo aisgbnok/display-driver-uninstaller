@@ -16,17 +16,17 @@
         <conv:CombiningConverter x:Key="NotNullToVis" Converter1="{StaticResource NotNull}" Converter2="{StaticResource BoolToVis}" />
 
         <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="{DynamicResource AboutText}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
         </Style>
 
         <Style TargetType="{x:Type Label}">
-            <Setter Property="Foreground" Value="{DynamicResource AboutText}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
         </Style>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{DynamicResource AboutText}" />
-            <Setter Property="Background" Value="{DynamicResource AboutPanelBg}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource AboutBorder}" />
+            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -39,10 +39,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource AboutPanelHover}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource AboutWindowBg}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource App.Surface.Window}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -51,11 +51,11 @@
         </Style>
 
         <ControlTemplate x:Key="tempText">
-            <ScrollViewer Grid.Row="2" Background="{DynamicResource AboutPanelBg}">
+            <ScrollViewer Grid.Row="2" Background="{DynamicResource App.Surface.Panel}">
                 <TextBlock Text="{Binding ElementName=frmAbout, Path=Text, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            Padding="10"
                            TextWrapping="Wrap"
-                           Foreground="{DynamicResource AboutText}" />
+                           Foreground="{DynamicResource App.Text.Primary}" />
             </ScrollViewer>
         </ControlTemplate>
 
@@ -64,14 +64,14 @@
                 <TextBlock DockPanel.Dock="Top"
                            Text="{Binding ElementName=frmAbout, Path=Text, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            Background="#22000000"
-                           Foreground="{DynamicResource AboutText}"
+                           Foreground="{DynamicResource App.Text.Primary}"
                            Grid.Row="2"
                            FontSize="16"
                            FontWeight="Bold"
                            Height="30" />
 
-                <ScrollViewer DockPanel.Dock="Top" Background="{DynamicResource AboutPanelBg}" TextElement.Foreground="{DynamicResource AboutText}">
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Settings.LanguageOptions}" AlternationCount="2" TextElement.Foreground="{DynamicResource AboutText}">
+                <ScrollViewer DockPanel.Dock="Top" Background="{DynamicResource App.Surface.Panel}" TextElement.Foreground="{DynamicResource App.Text.Primary}">
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Settings.LanguageOptions}" AlternationCount="2" TextElement.Foreground="{DynamicResource App.Text.Primary}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="20" >
@@ -111,7 +111,7 @@
 										</Style>
 									</Grid.Style>-->
 
-                                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource AboutAccent}" FontSize="16" >
+                                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource App.Text.Accent}" FontSize="16" >
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} ({1})">
                                                 <Binding Path="DisplayText" />
@@ -120,14 +120,14 @@
                                         </TextBlock.Text>
                                     </TextBlock>
 
-                                    <ItemsControl Grid.Row="1" Margin="20,0,0,0" ItemsSource="{Binding Translators}" TextElement.Foreground="{DynamicResource AboutText}">
+                                    <ItemsControl Grid.Row="1" Margin="20,0,0,0" ItemsSource="{Binding Translators}" TextElement.Foreground="{DynamicResource App.Text.Primary}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <StackPanel TextElement.Foreground="{DynamicResource AboutText}">
-                                                    <TextBlock Text="{Binding User}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource AboutText}" />
-                                                    <TextBlock Text="{Binding Details}" FontSize="14" Foreground="{DynamicResource AboutText}" Visibility="{Binding Path=Details, Converter={StaticResource StrNotNullToVis}}"/>
+                                                <StackPanel TextElement.Foreground="{DynamicResource App.Text.Primary}">
+                                                    <TextBlock Text="{Binding User}" FontWeight="Bold" FontSize="14" Foreground="{DynamicResource App.Text.Primary}" />
+                                                    <TextBlock Text="{Binding Details}" FontSize="14" Foreground="{DynamicResource App.Text.Primary}" Visibility="{Binding Path=Details, Converter={StaticResource StrNotNullToVis}}"/>
 
-                                                    <TextBlock FontStyle="Italic" FontSize="13" Foreground="{DynamicResource AboutText}" Visibility="{Binding Path=LastUpdate, Converter={StaticResource NotNullToVis}}">
+                                                    <TextBlock FontStyle="Italic" FontSize="13" Foreground="{DynamicResource App.Text.Primary}" Visibility="{Binding Path=LastUpdate, Converter={StaticResource NotNullToVis}}">
 														<Run Text="Last update: " />
 														<Run Text="{Binding LastUpdate, StringFormat='{}{0:d MMMM yyyy}'}"/>
 													</TextBlock>
@@ -175,7 +175,7 @@
         </Style>
     </Window.Style>
 
-    <Grid Background="{DynamicResource AboutWindowBg}" TextElement.Foreground="{DynamicResource AboutText}">
+    <Grid Background="{DynamicResource App.Surface.Window}" TextElement.Foreground="{DynamicResource App.Text.Primary}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="*" />
@@ -184,7 +184,7 @@
 
         <Image DockPanel.Dock="Top" Source="Resources/ddu_logo.png" Stretch="Uniform" Grid.Row="0" Margin="0,0,0,23"/>
 
-        <Border Grid.Row="1" BorderBrush="{DynamicResource AboutBorder}" Background="{DynamicResource AboutPanelBg}" Margin="-1,0" BorderThickness="1">
+        <Border Grid.Row="1" BorderBrush="{DynamicResource App.Border}" Background="{DynamicResource App.Surface.Panel}" Margin="-1,0" BorderThickness="1">
             <ContentControl x:Name="contCtrl">
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
