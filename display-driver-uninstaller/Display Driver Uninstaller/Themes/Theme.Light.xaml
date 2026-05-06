@@ -1,73 +1,73 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
     <!-- Primary surfaces -->
-    <SolidColorBrush x:Key="App.Surface.Window" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="App.Surface.Panel" Color="#FFF0F0F0" />
-    <SolidColorBrush x:Key="App.Surface.Panel.Hover" Color="#FFE6E6E6" />
-    <SolidColorBrush x:Key="App.Surface.Panel.Pressed" Color="#FFD4D4D4" />
-    <SolidColorBrush x:Key="App.Surface.Control" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="App.Surface.Control.Hover" Color="#FFF2F2F2" />
-    <SolidColorBrush x:Key="App.Surface.Control.Pressed" Color="#FFE6E6E6" />
-    <SolidColorBrush x:Key="App.Surface.Log" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="App.Surface.Menu" Color="#28FFFFFF" />
-    <SolidColorBrush x:Key="App.Surface.Status" Color="#28FFFFFF" />
+    <SolidColorBrush x:Key="App.Surface.Window" Color="#FFFFFFFF" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Panel" Color="#FFF0F0F0" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Panel.Hover" Color="#FFE6E6E6" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Panel.Pressed" Color="#FFD4D4D4" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Control" Color="#FFFFFFFF" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Control.Hover" Color="#FFF2F2F2" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Control.Pressed" Color="#FFE6E6E6" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Log" Color="#FFFFFFFF" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Menu" Color="#28FFFFFF" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Surface.Status" Color="#28FFFFFF" po:Freeze="True" />
 
     <!-- Text -->
-    <SolidColorBrush x:Key="App.Text.Primary" Color="#FF000000" />
-    <SolidColorBrush x:Key="App.Text.Muted" Color="#FF5C6670" />
-    <SolidColorBrush x:Key="App.Text.Warning" Color="#FFEB0000" />
-    <SolidColorBrush x:Key="App.Text.Error" Color="#FFFF0000" />
-    <SolidColorBrush x:Key="App.Text.Accent" Color="#FF0078D4" />
+    <SolidColorBrush x:Key="App.Text.Primary" Color="#FF000000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Text.Muted" Color="#FF5C6670" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Text.Warning" Color="#FFEB0000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Text.Error" Color="#FFFF0000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Text.Accent" Color="#FF0078D4" po:Freeze="True" />
 
     <!-- Borders -->
-    <SolidColorBrush x:Key="App.Border" Color="#FF000000" />
-    <SolidColorBrush x:Key="App.Control.Border" Color="#FF7A7A7A" />
-
+    <SolidColorBrush x:Key="App.Border" Color="#FF000000" po:Freeze="True" />
+    
     <!-- Selection -->
-    <SolidColorBrush x:Key="App.Selection.Background" Color="#FFCBDCF4" />
-    <SolidColorBrush x:Key="App.Selection.Text" Color="#FF1A1A1A" />
-    <SolidColorBrush x:Key="App.Selection.ListBackground" Color="#FFB8D4F0" />
+    <SolidColorBrush x:Key="App.Selection.Background" Color="#FFCBDCF4" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Selection.Text" Color="#FF1A1A1A" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Selection.ListBackground" Color="#FFB8D4F0" po:Freeze="True" />
 
     <!-- Log specific -->
-    <SolidColorBrush x:Key="App.Log.Text.Normal" Color="#FF000000" />
-    <SolidColorBrush x:Key="App.Log.Text.Value" Color="#FF0000D2" />
-    <SolidColorBrush x:Key="App.Log.Text.Warning" Color="#FF000000" />
-    <SolidColorBrush x:Key="App.Log.Text.Error" Color="#FFFF0000" />
-    <SolidColorBrush x:Key="App.Log.Selection.Background" Color="#FFCBCBCB" />
+    <SolidColorBrush x:Key="App.Log.Text.Normal" Color="#FF000000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Log.Text.Value" Color="#FF0000D2" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Log.Text.Warning" Color="#FF000000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Log.Text.Error" Color="#FFFF0000" po:Freeze="True" />
+    <SolidColorBrush x:Key="App.Log.Selection.Background" Color="#FFCBCBCB" po:Freeze="True" />
 
     <!-- Log Gradients -->
-    <LinearGradientBrush x:Key="App.Log.Background.Event" StartPoint="0,0.5" EndPoint="1,0.5">
+    <LinearGradientBrush x:Key="App.Log.Background.Event" StartPoint="0,0.5" EndPoint="1,0.5" po:Freeze="True">
         <GradientStop Color="#FFBEC8FF" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Log.Background.Warning" StartPoint="0,0.5" EndPoint="1,0.5">
+    <LinearGradientBrush x:Key="App.Log.Background.Warning" StartPoint="0,0.5" EndPoint="1,0.5" po:Freeze="True">
         <GradientStop Color="#FFFFFFB4" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Log.Background.Error" StartPoint="0,0.5" EndPoint="1,0.5">
+    <LinearGradientBrush x:Key="App.Log.Background.Error" StartPoint="0,0.5" EndPoint="1,0.5" po:Freeze="True">
         <GradientStop Color="#FFFFE6E6" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
 
     <!-- Brand Gradients -->
-    <LinearGradientBrush x:Key="App.Brand.Nvidia" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="App.Brand.Nvidia" StartPoint="0.5,0" EndPoint="0.5,1" po:Freeze="True">
         <GradientStop Color="#FF94DA32" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Brand.Intel" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="App.Brand.Intel" StartPoint="0.5,0" EndPoint="0.5,1" po:Freeze="True">
         <GradientStop Color="#FFDCDCFF" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Brand.Amd" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="App.Brand.Amd" StartPoint="0.5,0" EndPoint="0.5,1" po:Freeze="True">
         <GradientStop Color="#FFFFE6E6" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Brand.Realtek" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="App.Brand.Realtek" StartPoint="0.5,0" EndPoint="0.5,1" po:Freeze="True">
         <GradientStop Color="#FFDCDCFF" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>
-    <LinearGradientBrush x:Key="App.Brand.SoundBlaster" StartPoint="0.5,0" EndPoint="0.5,1">
+    <LinearGradientBrush x:Key="App.Brand.SoundBlaster" StartPoint="0.5,0" EndPoint="0.5,1" po:Freeze="True">
         <GradientStop Color="#FFDCDCFF" Offset="0" />
         <GradientStop Color="#FFFFFFFF" Offset="1" />
     </LinearGradientBrush>

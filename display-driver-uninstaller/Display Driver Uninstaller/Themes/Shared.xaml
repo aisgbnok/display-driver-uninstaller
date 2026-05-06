@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <BitmapImage x:Key="logoAMD" UriSource="/Display%20Driver%20Uninstaller;component/Resources/amd_logo.png" po:Freeze="True" />
+    <BitmapImage x:Key="logoNvidia" UriSource="/Display%20Driver%20Uninstaller;component/Resources/nvidia_logo.png" po:Freeze="True" />
+    <BitmapImage x:Key="logoIntel" UriSource="/Display%20Driver%20Uninstaller;component/Resources/intel_logo.jpg" po:Freeze="True" />
+    <BitmapImage x:Key="logoRealtek" UriSource="/Display%20Driver%20Uninstaller;component/Resources/realtek-logo.png" po:Freeze="True" />
+    <BitmapImage x:Key="logoSoundBlaster" UriSource="/Display%20Driver%20Uninstaller;component/Resources/creative_logo.png" po:Freeze="True" />
+
+</ResourceDictionary>

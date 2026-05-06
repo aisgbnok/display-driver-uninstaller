@@ -80,74 +80,58 @@ Namespace Display_Driver_Uninstaller
         End Property
 
         Public Shared Function ShowThemedNotice(message As String,
-												Optional title As String = Nothing,
-												Optional buttons As MessageBoxButton = MessageBoxButton.OK,
-												Optional owner As Window = Nothing) As MessageBoxResult
-			Dim noticeOwner As Window = If(owner, TryCast(Current?.MainWindow, Window))
-			Dim resolvedTitle As String = If(String.IsNullOrWhiteSpace(title), Application.Settings.AppName, title)
+                                                Optional title As String = Nothing,
+                                                Optional buttons As MessageBoxButton = MessageBoxButton.OK,
+                                                Optional owner As Window = Nothing) As MessageBoxResult
+            Dim noticeOwner As Window = If(owner, TryCast(Current?.MainWindow, Window))
+            Dim resolvedTitle As String = If(String.IsNullOrWhiteSpace(title), Application.Settings.AppName, title)
 
-			If Not UseDarkThemeSession Then
-				If m_dispatcher Is Nothing Then
-					Return ShowStandardNotice(noticeOwner, message, resolvedTitle, buttons)
-				End If
+            If m_dispatcher Is Nothing Then
+                Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
+            End If
 
-				If Not m_dispatcher.CheckAccess() Then
-					Return CType(m_dispatcher.Invoke(Function() ShowThemedNotice(message, resolvedTitle, buttons, noticeOwner)), MessageBoxResult)
-				End If
+            If Not m_dispatcher.CheckAccess() Then
+                Return CType(m_dispatcher.Invoke(Function() ShowThemedNotice(message, title, buttons, owner)), MessageBoxResult)
+            End If
 
-				Return ShowStandardNotice(noticeOwner, message, resolvedTitle, buttons)
-			End If
+            Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
+        End Function
 
-			If m_dispatcher Is Nothing Then
-				Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
-			End If
+		Private Shared _themeLight As ResourceDictionary
+        Private Shared _themeDark As ResourceDictionary
+        Private Shared _activeTheme As ResourceDictionary
 
-			If Not m_dispatcher.CheckAccess() Then
-				Return CType(m_dispatcher.Invoke(Function() ShowThemedNotice(message, resolvedTitle, buttons, noticeOwner)), MessageBoxResult)
-			End If
+        ''' <summary>
+        ''' Centralized Theme Engine
+        ''' Defines and applies all Brushes, Colors, and Gradients directly to Application.Current.Resources.
+        ''' </summary>
+        Public Shared Sub SetGlobalTheme()
+            If m_dispatcher IsNot Nothing AndAlso Not m_dispatcher.CheckAccess() Then
+                m_dispatcher.Invoke(Sub() SetGlobalTheme())
+                Return
+            End If
 
-			Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
-		End Function
+            If _themeLight Is Nothing Then
+                For Each dict In Current.Resources.MergedDictionaries
+                    If dict.Source IsNot Nothing AndAlso dict.Source.OriginalString.Contains("Theme.Light.xaml") Then
+                        _themeLight = dict
+                        Exit For
+                    End If
+                Next
+                If _themeLight Is Nothing Then _themeLight = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Light.xaml", UriKind.Relative)}
+                _themeDark = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Dark.xaml", UriKind.Relative)}
+                _activeTheme = _themeLight
+            End If
 
-		Private Shared Function ShowStandardNotice(owner As Window,
-												   message As String,
-												   title As String,
-												   buttons As MessageBoxButton) As MessageBoxResult
-			If owner Is Nothing Then
-				Return MessageBox.Show(message, title, buttons, MessageBoxImage.Information)
-			End If
+            Dim isDark As Boolean = UseDarkThemeSession
+            Dim newTheme As ResourceDictionary = If(isDark, _themeDark, _themeLight)
 
-			Return MessageBox.Show(owner, message, title, buttons, MessageBoxImage.Information)
-		End Function
-
-		''' <summary>
-		''' Centralized Theme Engine (Single Source of Truth)
-		''' Defines and applies all Brushes, Colors, and Gradients directly to Application.Current.Resources.
-		''' This allows WPF's native DynamicResource bindings to automatically propagate theme changes
-		''' across all windows simultaneously without needing to iterate through the visual tree.
-		''' </summary>
-		Public Shared Sub SetGlobalTheme()
-			If m_dispatcher IsNot Nothing AndAlso Not m_dispatcher.CheckAccess() Then
-				m_dispatcher.Invoke(Sub() SetGlobalTheme())
-				Return
-			End If
-
-			Dim isDark As Boolean = UseDarkThemeSession
-			Dim themeUri As Uri = If(isDark, New Uri("Themes/Theme.Dark.xaml", UriKind.Relative), New Uri("Themes/Theme.Light.xaml", UriKind.Relative))
-
-			Dim newTheme As New ResourceDictionary() With {.Source = themeUri}
-			Dim appDict As ResourceDictionary = Current.Resources
-			
-			If appDict.MergedDictionaries.Count > 0 Then
-				appDict.MergedDictionaries(0) = newTheme
-			Else
-				appDict.MergedDictionaries.Add(newTheme)
-			End If
-		End Sub
-
-		Private Shared Function ParseColor(colorText As String) As Color
-			Return CType(ColorConverter.ConvertFromString(colorText), Color)
-		End Function
+            If _activeTheme IsNot newTheme Then
+                Current.Resources.MergedDictionaries.Remove(_activeTheme)
+                Current.Resources.MergedDictionaries.Add(newTheme)
+                _activeTheme = newTheme
+            End If
+        End Sub
 
 		Public Sub New()
 			m_Data = New Data()
@@ -512,7 +496,6 @@ Namespace Display_Driver_Uninstaller
 				' Process commandline args
 				LaunchOptions.LoadArgs(e.Args)
 
-
 				' Processing links before launching UI 
 				' > Causes no Window 'flash' (frmMain not loaded yet)
 				' > Opens link before checking update (not waiting for update check, slow connection => slower link opening)
@@ -576,11 +559,8 @@ Namespace Display_Driver_Uninstaller
 					Log.AddException(ex, "Parsing arguments failed!" & CRLF & ">> Application_Startup()")
 				End Try
 
-
-
 				' Load default language (English) + Find language files from folder
 				InitLanguages()
-
 
 				' Load AppSettings and select last used language (if settings exists)
 				Settings.Load()
@@ -658,7 +638,6 @@ Namespace Display_Driver_Uninstaller
 
             LaunchMainWindow()
 		End Sub
-
 
 		Private Function WinUpdatePending() As Boolean
 			Using regkey As RegistryKey = MyRegistry.OpenSubKey(Registry.LocalMachine, "SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired")
@@ -809,7 +788,6 @@ Namespace Display_Driver_Uninstaller
 						If Settings.EnableSafeModeDialog Then
 							Dim bootOption As Integer = -1              '-1 = close, 0 = normal, 1 = SafeMode, 2 = SafeMode with network
 							Dim frmSafeBoot As New FrmLaunch With {.DataContext = Data, .Topmost = True}
-
 
 							Dim launch As Boolean? = frmSafeBoot.ShowDialog()
 
@@ -976,9 +954,7 @@ Namespace Display_Driver_Uninstaller
 
 				Dim serviceExePath As String = Path.Combine(Path.GetTempPath(), "DDUSafeBootHandler.exe")
 
-
 				File.Copy(Paths.AppExeFile, serviceExePath, True)
-
 
 				Dim processInfo As New ProcessStartInfo("sc.exe",
 			$"create DDUSafeBootHandler binPath= ""{serviceExePath} /service"" start= auto") With {
