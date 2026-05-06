@@ -45,7 +45,6 @@ Namespace Display_Driver_Uninstaller
 		Private Shared m_isDataSaved As Boolean = False
 		Private Shared m_allowSaveData As Boolean = False
 		Private Shared m_Data As Data
-		Private Shared m_useDarkThemeSession As Boolean = False
 
 		Public Shared ReadOnly Property Data As Data
 			Get
@@ -72,12 +71,6 @@ Namespace Display_Driver_Uninstaller
 				Return m_Data.Log
 			End Get
 		End Property
-        Public Shared ReadOnly Property UseDarkThemeSession As Boolean
-            Get
-                If m_Data IsNot Nothing Then Return Settings.UseDarkTheme
-                Return m_useDarkThemeSession
-            End Get
-        End Property
 
         Public Shared Function ShowThemedNotice(message As String,
                                                 Optional title As String = Nothing,
@@ -96,8 +89,7 @@ Namespace Display_Driver_Uninstaller
 
             Return FrmNotice.ShowNotice(noticeOwner, resolvedTitle, message, buttons)
         End Function
-
-		Private Shared _themeLight As ResourceDictionary
+        Private Shared _themeLight As ResourceDictionary
         Private Shared _themeDark As ResourceDictionary
         Private Shared _activeTheme As ResourceDictionary
 
@@ -111,23 +103,14 @@ Namespace Display_Driver_Uninstaller
                 Return
             End If
 
-            If _themeLight Is Nothing Then
-                For Each dict In Current.Resources.MergedDictionaries
-                    If dict.Source IsNot Nothing AndAlso dict.Source.OriginalString.Contains("Theme.Light.xaml") Then
-                        _themeLight = dict
-                        Exit For
-                    End If
-                Next
-                If _themeLight Is Nothing Then _themeLight = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Light.xaml", UriKind.Relative)}
-                _themeDark = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Dark.xaml", UriKind.Relative)}
-                _activeTheme = _themeLight
-            End If
-
-            Dim isDark As Boolean = UseDarkThemeSession
+            Dim isDark As Boolean = Settings.UseDarkTheme
             Dim newTheme As ResourceDictionary = If(isDark, _themeDark, _themeLight)
 
             If _activeTheme IsNot newTheme Then
-                Current.Resources.MergedDictionaries.Remove(_activeTheme)
+                If _activeTheme IsNot Nothing Then
+                    Current.Resources.MergedDictionaries.Remove(_activeTheme)
+                End If
+
                 Current.Resources.MergedDictionaries.Add(newTheme)
                 _activeTheme = newTheme
             End If
@@ -136,6 +119,10 @@ Namespace Display_Driver_Uninstaller
 		Public Sub New()
 			m_Data = New Data()
 			m_dispatcher = Me.Dispatcher
+
+			' Eagerly and symmetrically instantiate theme dictionaries
+			_themeLight = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Light.xaml", UriKind.Relative)}
+			_themeDark = New ResourceDictionary() With {.Source = New Uri("Themes/Theme.Dark.xaml", UriKind.Relative)}
 
 			'ALL Exceptions are shown in English
 			Thread.CurrentThread.CurrentCulture = New CultureInfo("en-US")
@@ -564,7 +551,6 @@ Namespace Display_Driver_Uninstaller
 
 				' Load AppSettings and select last used language (if settings exists)
 				Settings.Load()
-				m_useDarkThemeSession = Settings.UseDarkTheme
 
 				' Initialize the global resource dictionary with the correct theme palette
 				' This must run before any window renders so all dynamic resources resolve correctly on launch.

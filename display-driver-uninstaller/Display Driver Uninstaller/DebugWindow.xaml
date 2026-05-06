@@ -35,145 +35,6 @@
             <Setter Property="SelectionBrush" Value="{DynamicResource App.Selection.ListBackground}" />
         </Style>
 
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="8,2" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="ButtonBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"
-                                              Margin="{TemplateBinding Padding}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background"
-                                        Value="{DynamicResource App.Surface.Panel.Hover}" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background"
-                                        Value="{DynamicResource App.Surface.Panel.Pressed}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.45" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="DebugComboBoxStyle" TargetType="{x:Type ComboBox}">
-            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="8,2,28,2" />
-            <Setter Property="Height" Value="22" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Grid>
-                            <ToggleButton x:Name="ToggleButton"
-                                          Focusable="False"
-                                          ClickMode="Press"
-                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                <ToggleButton.Template>
-                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                        <Border x:Name="ComboBorder"
-                                                Background="{DynamicResource App.Surface.Panel}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="{TemplateBinding BorderThickness}"
-                                                SnapsToDevicePixels="True">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="24" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="1"
-                                                           Text="▾"
-                                                           Foreground="{DynamicResource App.Text.Muted}"
-                                                           VerticalAlignment="Center"
-                                                           HorizontalAlignment="Center"
-                                                           FontSize="14" />
-                                            </Grid>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter TargetName="ComboBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
-                                                <Setter TargetName="ComboBorder" Property="BorderBrush" Value="{DynamicResource App.Text.Primary}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </ToggleButton.Template>
-                            </ToggleButton>
-
-                            <ContentPresenter IsHitTestVisible="False"
-                                              Margin="8,2,28,2"
-                                              VerticalAlignment="Center"
-                                              HorizontalAlignment="Left"
-                                              Content="{TemplateBinding SelectionBoxItem}"
-                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
-
-                            <Popup x:Name="Popup"
-                                   Placement="Bottom"
-                                   IsOpen="{TemplateBinding IsDropDownOpen}"
-                                   AllowsTransparency="True"
-                                   Focusable="False"
-                                   PopupAnimation="Slide">
-                                <Border Background="{DynamicResource App.Surface.Panel}"
-                                        BorderBrush="{DynamicResource App.Border}"
-                                        BorderThickness="1"
-                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                                        SnapsToDevicePixels="True">
-                                    <ScrollViewer SnapsToDevicePixels="True">
-                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="HasItems" Value="False">
-                                <Setter TargetName="Popup" Property="MinHeight" Value="22" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.45" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="DebugComboBoxItemStyle" TargetType="{x:Type ComboBoxItem}">
-            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
-            <Setter Property="Padding" Value="4,2" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Style.Triggers>
-                <Trigger Property="IsHighlighted" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
-                </Trigger>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource App.Selection.ListBackground}" />
-                    <Setter Property="Foreground" Value="{DynamicResource App.Selection.Text}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
         <Style TargetType="{x:Type ListBox}">
             <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
             <Setter Property="Background" Value="{DynamicResource App.Surface.Control}" />
@@ -181,52 +42,6 @@
             <Setter Property="BorderThickness" Value="1" />
         </Style>
 
-        <!-- ═══════════════════════════════════════════════
-             TABITEM — folder-tab pattern:
-               inactive  = App.Surface.Panel  (recedes into strip)
-               hover     = App.Surface.Panel.Hover
-               selected  = App.Surface.Control (merges with content pane)
-             Margin -1 bottom on selected erases the strip border
-             so the tab visually IS the content pane.
-             ═══════════════════════════════════════════════ -->
-        <Style TargetType="{x:Type TabItem}">
-            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-            <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource App.Border}" />
-            <Setter Property="Padding" Value="10,4" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Border x:Name="TabBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1,1,1,0"
-                                Margin="0,2,4,0"
-                                Padding="{TemplateBinding Padding}"
-                                SnapsToDevicePixels="True">
-                            <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="TabBorder" Property="Background" Value="{DynamicResource App.Surface.Control}" />
-                                <Setter TargetName="TabBorder" Property="Margin" Value="0,0,4,-3" />
-                                <Setter Property="Panel.ZIndex" Value="1" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="TabBorder" Property="Opacity" Value="0.45" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- ═══════════════════════════════════════════════
-             GRIDVIEWCOLUMNHEADER
-        ═══════════════════════════════════════════════ -->
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
             <Setter Property="Background" Value="{DynamicResource App.Surface.Panel}" />
@@ -234,12 +49,6 @@
             <Setter Property="Padding" Value="8,2" />
         </Style>
 
-        <!-- 
-        ═══════════════════════════════════════════════
-        ALTERNATING LIST ROWS
-            Index 0 = App.Surface.Control (base content surface)
-            Index 1 = App.Surface.Panel (slightly off from content)
-        ═══════════════════════════════════════════════ -->
         <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type Control}">
             <Style.Triggers>
                 <Trigger Property="ItemsControl.AlternationIndex" Value="0">
@@ -531,20 +340,12 @@
             </StackPanel>
         </DataTemplate>
 
-        <ContextMenu x:Key="cm">
+        <ContextMenu x:Key="cm" Style="{StaticResource SharedContextMenuStyle}" ItemContainerStyle="{StaticResource SharedContextMenuItemStyle}">
             <MenuItem x:Name="copyDevice" Header="Copy Selected Device" Command="Copy" CommandParameter="CopyDevice"/>
         </ContextMenu>
 
     </Window.Resources>
 
-    <!--
-        TabControl:
-          Background = App.Surface.Window  ← TAB STRIP (behind the tabs)
-          BorderBrush = App.Border   ← border around the whole tab control
-
-        The content area inside each TabItem is controlled by the Grid's Background.
-        Set to App.Surface.Control so it matches the selected tab.
-    -->
     <TabControl Background="{DynamicResource App.Surface.Window}" BorderBrush="{DynamicResource App.Border}">
         <TabItem Header="Setup API">
             <Grid Background="{DynamicResource App.Surface.Control}">
@@ -597,7 +398,7 @@
                 <DockPanel Grid.Row="1" Margin="0, 0, 0,8 ">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Device Filter:" VerticalAlignment="Center" />
-                        <ComboBox x:Name="cbFilterDev" Width="150" SelectedIndex="0" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}" />
+                        <ComboBox x:Name="cbFilterDev" Width="150" SelectedIndex="0" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SharedComboBoxStyle}" ItemContainerStyle="{StaticResource SharedComboBoxItemStyle}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
                         <Button Content="Find devices" Height="23" Name="btnFindDevs" Width="120" Click="BtnFindDevs_Click" Margin="8,0,0,0" />
@@ -609,7 +410,7 @@
                 <!-- Row 2: Secondary filter bar -->
                 <DockPanel Grid.Row="2">
                         <Label Content="Filter:" VerticalAlignment="Center" />
-                        <ComboBox x:Name="cbFilter" Width="150" SelectedIndex="6" SelectionChanged="CbFilter_SelectionChanged" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource DebugComboBoxStyle}" ItemContainerStyle="{DynamicResource DebugComboBoxItemStyle}"/>
+                        <ComboBox x:Name="cbFilter" Width="150" SelectedIndex="6" SelectionChanged="CbFilter_SelectionChanged" VerticalContentAlignment="Center" VerticalAlignment="Center" Style="{StaticResource SharedComboBoxStyle}" ItemContainerStyle="{StaticResource SharedComboBoxItemStyle}"/>
                     <Label Width="80" Content="Items: 0" Height="28" Name="lblDevices" DockPanel.Dock="Right"/>
                     <TextBox Name="tbFilter" TextChanged="TbFilter_TextChanged" />
                 </DockPanel>
@@ -627,36 +428,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-
-                <!-- Row 2: File list -->
-                <ListView Grid.ColumnSpan="2" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource App.Surface.Control}" Foreground="{DynamicResource App.Text.Primary}" BorderBrush="{DynamicResource App.Border}">
-                    <ListView.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Delete!" Name="menuFileIODelete" />
-                        </ContextMenu>
-                    </ListView.ContextMenu>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListViewItem}">
-                            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
-                            <Setter Property="ToolTip" Value="{Binding Path=FlagsList, Mode=OneWay}" />
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource App.Selection.ListBackground}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource App.Selection.Text}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Path" DisplayMemberBinding="{Binding Path=Path, Mode=OneWay}" Width="384" />
-                            <GridViewColumn Header="Attributes" DisplayMemberBinding="{Binding Path=FlagsStr, Mode=OneWay}" Width="96" />
-                        </GridView>
-                    </ListView.View>
-                </ListView>
 
                 <!-- Row 0: Path input + action buttons -->
                 <TextBox Name="tbPath" VerticalScrollBarVisibility="Disabled" TextWrapping="Wrap" Text="C:\Windows" />
@@ -687,6 +458,36 @@
                         </TextBlock.Text>
                     </TextBlock>
                 </StackPanel>
+
+                <!-- Row 2: File list -->
+                <ListView Grid.ColumnSpan="2" Grid.Row="2" Name="lbPaths" ItemsSource="{Binding ElementName=frmMain, Path=PathList, Mode=OneWay}" SelectionMode="Single" Background="{DynamicResource App.Surface.Control}" Foreground="{DynamicResource App.Text.Primary}" BorderBrush="{DynamicResource App.Border}">
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Delete!" Name="menuFileIODelete" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Foreground" Value="{DynamicResource App.Text.Primary}" />
+                            <Setter Property="ToolTip" Value="{Binding Path=FlagsList, Mode=OneWay}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource App.Surface.Panel.Hover}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource App.Selection.ListBackground}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource App.Selection.Text}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Path" DisplayMemberBinding="{Binding Path=Path, Mode=OneWay}" Width="384" />
+                            <GridViewColumn Header="Attributes" DisplayMemberBinding="{Binding Path=FlagsStr, Mode=OneWay}" Width="96" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </Grid>
         </TabItem>
 
